@@ -11,7 +11,7 @@
     </parent>
 
     <groupId>com.sysw.suite.core.module</groupId>
-    <artifactId>core-module</artifactId>
+    <artifactId>core-application</artifactId>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>

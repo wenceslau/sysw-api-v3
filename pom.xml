@@ -12,6 +12,8 @@
         <module>core/domain</module>
         <module>core/application</module>
         <module>core/infrastructure</module>
+        <module>audit/domain</module>
+        <module>audit/application</module>
     </modules>
 
     <properties>

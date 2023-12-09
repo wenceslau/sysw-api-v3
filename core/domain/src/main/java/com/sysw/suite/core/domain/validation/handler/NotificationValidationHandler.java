@@ -47,7 +47,7 @@ public class NotificationValidationHandler implements ValidationHandler {
         } catch (final Throwable t) {
             this.errors.add(new Error(t.getMessage()));
         }
-        return null;
+        return this;
     }
 
     @Override

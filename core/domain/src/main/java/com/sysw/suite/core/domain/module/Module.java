@@ -5,7 +5,7 @@ import com.sysw.suite.core.domain.validation.ValidationHandler;
 
 import java.time.Instant;
 
-public class Module extends AggregateRoot<ModuleID> {
+public class Module extends AggregateRoot<ModuleID> implements Cloneable {
 
     private String name;
     private String displayName;
@@ -29,6 +29,24 @@ public class Module extends AggregateRoot<ModuleID> {
         this.createdAt = aCreatedAt;
         this.updatedAt = aUpdatedAt;
     }
+
+    public static Module create(String aName,
+                                String aDisplayName,
+                                String aLicense,
+                                boolean isActive) {
+        final var id = ModuleID.unique();
+        return create(id, aName, aDisplayName, aLicense, isActive);
+    }
+
+    public static Module create(ModuleID anId,
+                                String aName,
+                                String aDisplayName,
+                                String aLicense,
+                                boolean isActive) {
+        final var now = Instant.now();
+        return new Module(anId, aName, aDisplayName, aLicense, isActive, now, now);
+    }
+
 
     @Override
     public void validate(ValidationHandler validationHandler) {
@@ -59,22 +77,6 @@ public class Module extends AggregateRoot<ModuleID> {
         return updatedAt;
     }
 
-    public static Module create(String aName,
-                                String aDisplayName,
-                                String aLicense,
-                                boolean isActive) {
-        final var id = ModuleID.unique();
-        return create(id, aName, aDisplayName, aLicense, isActive);
-    }
-
-    public static Module create(ModuleID anId,
-                                String aName,
-                                String aDisplayName,
-                                String aLicense,
-                                boolean isActive) {
-        final var now = Instant.now();
-        return new Module(anId, aName, aDisplayName, aLicense, isActive, now, now);
-    }
 
     public Module inactive() {
         active = false;
@@ -87,4 +89,29 @@ public class Module extends AggregateRoot<ModuleID> {
         updatedAt = Instant.now();
         return this;
     }
+
+    public Module update(String name, String displayName, String license, boolean active) {
+        this.name = name;
+        this.displayName = displayName;
+        this.license = license;
+        if (active){
+            active();
+        }else{
+            inactive();
+        }
+        return this;
+    }
+
+    @Override
+    public Module clone() {
+        try {
+            Module clone = (Module) super.clone();
+            // TODO: copy mutable state here, so the clone can't change the internals of the original
+            return clone;
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
+    }
+
+
 }

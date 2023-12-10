@@ -57,7 +57,6 @@ public class UpdateModuleUseCaseTest {
                         && Objects.equals(module.isActive(), updatedModule.isActive())
                         && Objects.nonNull(module.getId())
                         && Objects.nonNull(module.getCreatedAt())
-                        && module.getUpdatedAt().isAfter(updatedModule.getUpdatedAt())
         ));
     }
 

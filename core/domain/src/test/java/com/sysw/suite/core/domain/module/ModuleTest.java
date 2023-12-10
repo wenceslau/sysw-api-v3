@@ -170,6 +170,12 @@ class ModuleTest {
         var updateAt = actualApplication.getUpdatedAt();
         Assertions.assertFalse(actualApplication.isActive());
 
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
         var deactivatedApplication = actualApplication.active();
 
         Assertions.assertDoesNotThrow(() -> actualApplication.validate(new ThrowsValidationHandler()));

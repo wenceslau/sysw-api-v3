@@ -1,0 +1,22 @@
+version: '3.7'
+
+services:
+
+  mysql:
+    container_name: adm_videos_mysql
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456
+      MYSQL_DATABASE: adm_videos
+      MYSQL_ROOT_HOST: '%'
+    security_opt:
+      - seccomp:unconfined
+    ports:
+      - 3306:3306
+#    volumes:
+#      - ../.docker/mysql:/var/lib/mysql:rw
+    networks:
+      - adm_videos_network
+
+networks:
+  adm_videos_network:

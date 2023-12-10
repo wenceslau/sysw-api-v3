@@ -1,0 +1,12 @@
+mysql:
+  username: root
+  password: 123456
+  schema: sysw_core
+  url: localhost:3306
+
+server:
+  port: 8080
+  undertow:
+    threads:
+      worker: 32
+      io: 2

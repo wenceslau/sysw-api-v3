@@ -14,7 +14,7 @@ class ModuleTest {
         final var expectedLicense = "QWER1234ZXCV";
         final var expectedActive = true;
 
-        final var actualApplication = Module.create(
+        final var actualApplication = Module.newModule(
                 expectedName, expectedDisplayName, expectedLicense, expectedActive);
 
         Assertions.assertEquals(expectedName, actualApplication.getName());
@@ -35,7 +35,7 @@ class ModuleTest {
         final var expectedErrorCount = 1;
         final var expectedMessage = "'name' should not be null";
 
-        final var actualApplication = Module.create(
+        final var actualApplication = Module.newModule(
                 expectedName, expectedDisplayName, expectedLicense, expectedActive);
 
         final var actualException = Assertions.assertThrows(DomainException.class,
@@ -55,7 +55,7 @@ class ModuleTest {
         final var expectedErrorCount = 1;
         final var expectedMessage = "'name' should not be empty";
 
-        final var actualApplication = Module.create(
+        final var actualApplication = Module.newModule(
                 expectedName, expectedDisplayName, expectedLicense, expectedActive);
 
         final var actualException = Assertions.assertThrows(DomainException.class,
@@ -75,7 +75,7 @@ class ModuleTest {
         final var expectedErrorCount = 1;
         final var expectedMessage = "'display name' should not be null";
 
-        final var actualApplication = Module.create(
+        final var actualApplication = Module.newModule(
                 expectedName, expectedDisplayName, expectedLicense, expectedActive);
 
         final var actualException = Assertions.assertThrows(DomainException.class, () ->
@@ -95,7 +95,7 @@ class ModuleTest {
         final var expectedErrorCount = 1;
         final var expectedMessage = "'display name' should not be empty";
 
-        final var actualApplication = Module.create(
+        final var actualApplication = Module.newModule(
                 expectedName, expectedDisplayName, expectedLicense, expectedActive);
 
         final var actualException = Assertions.assertThrows(DomainException.class, () ->
@@ -112,7 +112,7 @@ class ModuleTest {
         final var expectedLicense = "QWER1234ZXCV";
         final var expectedActive = true;
 
-        final var actualApplication = Module.create(
+        final var actualApplication = Module.newModule(
                 expectedName, expectedDisplayName, expectedLicense, expectedActive);
 
         Assertions.assertDoesNotThrow(() -> actualApplication.validate(new ThrowsValidationHandler()));
@@ -133,7 +133,7 @@ class ModuleTest {
         final var expectedLicense = "QWER1234ZXCV";
         final var expectedActive = false;
 
-        final var actualApplication = Module.create(
+        final var actualApplication = Module.newModule(
                 expectedName, expectedDisplayName, expectedLicense, true);
 
         var updateAt = actualApplication.getUpdatedAt();
@@ -164,7 +164,7 @@ class ModuleTest {
         final var expectedLicense = "QWER1234ZXCV";
         final var expectedActive = true;
 
-        final var actualApplication = Module.create(
+        final var actualApplication = Module.newModule(
                 expectedName, expectedDisplayName, expectedLicense, false);
 
         var updateAt = actualApplication.getUpdatedAt();

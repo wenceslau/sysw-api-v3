@@ -4,6 +4,7 @@ import com.sysw.suite.core.domain.AggregateRoot;
 import com.sysw.suite.core.domain.validation.ValidationHandler;
 
 import java.time.Instant;
+import java.util.Objects;
 
 public class Module extends AggregateRoot<ModuleID> implements Cloneable {
 
@@ -26,25 +27,35 @@ public class Module extends AggregateRoot<ModuleID> implements Cloneable {
         this.displayName = aDisplayName;
         this.license = aLicense;
         this.active = isActive;
-        this.createdAt = aCreatedAt;
-        this.updatedAt = aUpdatedAt;
+        this.createdAt = Objects.requireNonNull(aCreatedAt, "createdAt must not be null");
+        this.updatedAt = Objects.requireNonNull(aUpdatedAt, "updatedAt must not be null");
     }
 
-    public static Module create(String aName,
-                                String aDisplayName,
-                                String aLicense,
-                                boolean isActive) {
+    public static Module newModule(String aName,
+                                   String aDisplayName,
+                                   String aLicense,
+                                   boolean isActive) {
         final var id = ModuleID.unique();
-        return create(id, aName, aDisplayName, aLicense, isActive);
+        return newModule(id, aName, aDisplayName, aLicense, isActive);
     }
 
-    public static Module create(ModuleID anId,
-                                String aName,
-                                String aDisplayName,
-                                String aLicense,
-                                boolean isActive) {
+    public static Module newModule(ModuleID anId,
+                                   String aName,
+                                   String aDisplayName,
+                                   String aLicense,
+                                   boolean isActive) {
         final var now = Instant.now();
         return new Module(anId, aName, aDisplayName, aLicense, isActive, now, now);
+    }
+
+    public static Module with(ModuleID from,
+                              String name,
+                              String displayName,
+                              String license,
+                              boolean active,
+                              Instant createdAt,
+                              Instant updatedAt) {
+        return new Module(from, name, displayName, license, active, createdAt, updatedAt);
     }
 
 

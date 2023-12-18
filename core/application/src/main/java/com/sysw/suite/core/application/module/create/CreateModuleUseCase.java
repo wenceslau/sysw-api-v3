@@ -24,7 +24,7 @@ public class CreateModuleUseCase extends UseCase<CreateModuleInput, CreateModule
         final var aLicense = aCommand.license();
         final var isActive = aCommand.active();
 
-        final var aModule = Module.create(aName, aDisplayName, aLicense, isActive);
+        final var aModule = Module.newModule(aName, aDisplayName, aLicense, isActive);
         final var notificationHandler = NotificationValidationHandler.create();
 
         aModule.validate(notificationHandler);

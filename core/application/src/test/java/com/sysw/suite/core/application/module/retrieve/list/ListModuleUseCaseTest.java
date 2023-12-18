@@ -14,7 +14,6 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -45,8 +44,8 @@ public class ListModuleUseCaseTest {
                 expectedPerPage, expectedTerms, expectedSort, expectedDirection);
 
         List<Module> moduleList = List.of(
-                Module.create(ModuleID.from("123"), "-", "-", "-", true),
-                Module.create(ModuleID.from("321"), "-", "-", "-", true)
+                Module.newModule(ModuleID.from("123"), "-", "-", "-", true),
+                Module.newModule(ModuleID.from("321"), "-", "-", "-", true)
         );
         final var expectedPagination = new Pagination<>(expectedPage, expectedPerPage, moduleList.size(), moduleList);
         final var expectedResult = expectedPagination.map(ModuleListOutput::from);

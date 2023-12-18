@@ -1,13 +1,9 @@
 package com.sysw.suite.core.application.module.retrieve.get;
 
-import com.sysw.suite.core.application.module.update.UpdateModuleInput;
-import com.sysw.suite.core.application.module.update.UpdateModuleOutput;
-import com.sysw.suite.core.application.module.update.UpdateModuleUseCase;
 import com.sysw.suite.core.domain.exception.DomainException;
 import com.sysw.suite.core.domain.module.Module;
 import com.sysw.suite.core.domain.module.ModuleGateway;
 import com.sysw.suite.core.domain.module.ModuleID;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -16,7 +12,6 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.Objects;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -39,7 +34,7 @@ public class GetModuleUseCaseTest {
     void givenInputId_whenCallGetModule_thenShouldReturnModule() {
         // Given
         String id = "123";
-        Module expectedModule = Module.create(ModuleID.from(id), "testName", "testDisplayName", "testLicense", true);
+        Module expectedModule = Module.newModule(ModuleID.from(id), "testName", "testDisplayName", "testLicense", true);
 
         // When
         when(moduleGateway.findById(ModuleID.from(id))).thenReturn(Optional.of(expectedModule));
@@ -61,7 +56,7 @@ public class GetModuleUseCaseTest {
         //Given
         ModuleID moduleId = ModuleID.from("1");
 
-        Module module = Module.create(moduleId, "module1", "moduleDisplayName", "license", true);
+        Module module = Module.newModule(moduleId, "module1", "moduleDisplayName", "license", true);
         when(moduleGateway.findById(moduleId)).thenReturn(Optional.of(module));
 
         //When

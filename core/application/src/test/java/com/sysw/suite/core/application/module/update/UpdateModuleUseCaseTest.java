@@ -37,7 +37,7 @@ public class UpdateModuleUseCaseTest {
         // Given
         ModuleID id = ModuleID.from("123");
         UpdateModuleInput input = UpdateModuleInput.with("123","testName", "testDisplayName", "testLicense", true);
-        Module updatedModule = Module.create(id, input.name(), input.displayName(), input.license(), input.active());
+        Module updatedModule = Module.newModule(id, input.name(), input.displayName(), input.license(), input.active());
 
         // When
         when(moduleGateway.findById(ModuleID.from(input.id()))).thenReturn(Optional.of(updatedModule.clone()));

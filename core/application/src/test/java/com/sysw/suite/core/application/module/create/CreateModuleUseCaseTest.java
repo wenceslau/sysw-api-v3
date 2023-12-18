@@ -3,7 +3,6 @@ package com.sysw.suite.core.application.module.create;
 import com.sysw.suite.core.domain.exception.DomainException;
 import com.sysw.suite.core.domain.module.Module;
 import com.sysw.suite.core.domain.module.ModuleGateway;
-import com.sysw.suite.core.domain.validation.handler.NotificationValidationHandler;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -37,7 +36,7 @@ public class CreateModuleUseCaseTest {
     void givenModuleInput_whenCallCreate_thenShouldReturnModuleId() {
         // Given
         CreateModuleInput input = CreateModuleInput.with("testName", "testDisplayName", "testLicense", true);
-        Module expectedModule = Module.create(input.name(), input.displayName(), input.license(), input.active());
+        Module expectedModule = Module.newModule(input.name(), input.displayName(), input.license(), input.active());
 
         // When
         when(moduleGateway.create(any(Module.class))).thenReturn(expectedModule);

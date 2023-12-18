@@ -1,11 +1,11 @@
 spring:
   datasource:
     url: jdbc:h2:mem://sysw_core:MODE=MYSQL;DATABASE_TO_LOWER=TRUE
-    username: ${mysql.username}
-    password: ${mysql.password}
+    username: root
+    password: 123456
     driver-class-name: org.h2.Driver
   jpa:
-    defer-datasource-initialization: true
+    defer-datasource-initialization: false
   h2:
     console:
       enabled: true

@@ -17,7 +17,7 @@
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <flyaway.url>jdbc:mysql://localhost:3306/adm_videos</flyaway.url>
+        <flyaway.url>jdbc:mysql://localhost:3306/sysw_core</flyaway.url>
     </properties>
 
     <dependencies>
@@ -67,6 +67,7 @@
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
+            <version>2.2.220</version>
             <scope>runtime</scope>
         </dependency>
 
@@ -98,7 +99,7 @@
                 <version>10.2.0</version>
                 <configuration>
                     <cleanDisabled>false</cleanDisabled>
-                    <url>jdbc:mysql://localhost:3306/adm_videos</url>
+                    <url>jdbc:mysql://localhost:3306/sysw_core</url>
                     <user>root</user>
                     <password>123456</password>
                 </configuration>

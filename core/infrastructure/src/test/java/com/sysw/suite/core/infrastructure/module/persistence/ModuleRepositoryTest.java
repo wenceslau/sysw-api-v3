@@ -68,4 +68,22 @@ public class ModuleRepositoryTest {
         Assertions.assertEquals(message, exception.getCause().getMessage());
     }
 
+
+    // Test a repository method with a null id value, check the exception message and the property name.
+    @Test
+    public void giveAnInvalidNullId_whenCallsCreate_shouldReturnAnException() {
+        final var message = "not-null property references a null or transient value : com.sysw.suite.core.infrastructure.module.persistence.ModuleJpaEntity.id";
+        final var property = "id";
+
+        final var module = Module.newModule("Name 1", "Display Name 1", "License 1", true);
+        final var entity = ModuleJpaEntity.from(module);
+        entity.setId(null);
+
+        final var exception = assertThrows(DataIntegrityViolationException.class, () -> moduleRepository.save(entity));
+        final var cause = Assertions.assertInstanceOf(PropertyValueException.class, exception.getCause());
+
+        Assertions.assertEquals(property, cause.getPropertyName());
+        Assertions.assertEquals(message, exception.getCause().getMessage());
+    }
+
 }

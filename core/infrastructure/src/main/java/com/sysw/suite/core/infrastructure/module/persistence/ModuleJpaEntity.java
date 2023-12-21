@@ -42,6 +42,7 @@ public class ModuleJpaEntity {
             final String id,
             final String name,
             final String displayName,
+            final String license,
             final boolean active,
             final Instant createdAt,
             final Instant updatedAt
@@ -49,6 +50,7 @@ public class ModuleJpaEntity {
         this.id = id;
         this.name = name;
         this.displayName = displayName;
+        this.license = license;
         this.active = active;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
@@ -59,6 +61,7 @@ public class ModuleJpaEntity {
                 aModule.getId().getValue(),
                 aModule.getName(),
                 aModule.getDisplayName(),
+                aModule.getLicense(),
                 aModule.isActive(),
                 aModule.getCreatedAt(),
                 aModule.getUpdatedAt()

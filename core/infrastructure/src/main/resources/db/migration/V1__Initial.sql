@@ -1,5 +1,5 @@
 CREATE TABLE modules (
-    id CHAR(32) NOT NULL PRIMARY KEY,
+    id CHAR(36) NOT NULL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     display_name VARCHAR(255),
     license varchar(4000),

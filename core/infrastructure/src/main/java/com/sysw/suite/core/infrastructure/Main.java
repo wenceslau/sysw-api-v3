@@ -11,5 +11,6 @@ public class Main {
         System.out.println("Hello world!");
         System.setProperty(AbstractEnvironment.DEFAULT_PROFILES_PROPERTY_NAME, "test");
         SpringApplication.run(WebServerConfig.class, args);
+
     }
 }

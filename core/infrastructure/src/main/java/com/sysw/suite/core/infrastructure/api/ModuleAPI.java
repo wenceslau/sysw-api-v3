@@ -3,6 +3,7 @@ package com.sysw.suite.core.infrastructure.api;
 import com.sysw.suite.core.domain.pagination.Pagination;
 import com.sysw.suite.core.infrastructure.module.models.CreateModuleRequest;
 import com.sysw.suite.core.infrastructure.module.models.ModuleResponse;
+import com.sysw.suite.core.infrastructure.module.models.UpdateModuleRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -55,4 +56,17 @@ public interface ModuleAPI {
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     ModuleResponse getModule(@PathVariable("id") String id);
+
+    @PutMapping( value = "/{id}",
+            produces = MediaType.APPLICATION_JSON_VALUE,
+            consumes = MediaType.APPLICATION_JSON_VALUE
+    )
+    @Operation(summary = "Update module by id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "Module updated"),
+            @ApiResponse(responseCode = "404", description = "Module not found"),
+            @ApiResponse(responseCode = "422", description = "Invalid request"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")
+    })
+    ResponseEntity<?> updateModule(@PathVariable("id") String id, @RequestBody UpdateModuleRequest request);
 }

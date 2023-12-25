@@ -6,6 +6,8 @@ import com.sysw.suite.core.application.module.create.CreateModuleOutput;
 import com.sysw.suite.core.application.module.create.CreateModuleUseCase;
 import com.sysw.suite.core.application.module.retrieve.get.GetModuleUseCase;
 import com.sysw.suite.core.application.module.retrieve.get.ModuleOutput;
+import com.sysw.suite.core.application.module.update.UpdateModuleOutput;
+import com.sysw.suite.core.application.module.update.UpdateModuleUseCase;
 import com.sysw.suite.core.domain.exception.DomainException;
 import com.sysw.suite.core.domain.exception.NotFoundException;
 import com.sysw.suite.core.domain.module.Module;
@@ -44,6 +46,9 @@ public class ControllerAPITest {
     @MockBean
     private GetModuleUseCase getModuleUseCase;
 
+    @MockBean
+    private UpdateModuleUseCase updateModuleUseCase;
+
 
     @Test
     void test() {
@@ -51,7 +56,7 @@ public class ControllerAPITest {
     }
 
     @Test
-    public void givenAValidCommand_whenCallsCreateCategory_shouldReturnCategoryId() throws Exception {
+    public void givenAValidInput_whenCallsCreateModule_shouldReturnModuleId() throws Exception {
         //given
         var expectedName = "name";
         var expectedDisplayName = "display name";
@@ -190,4 +195,40 @@ public class ControllerAPITest {
                 .andExpect(jsonPath("$.message", equalTo(expectedErrorMessage)));
     }
 
+    @Test
+    public void givenAValidInput_whenCallUpdateModule_shouldReturnModuleId() throws Exception {
+        //given
+        var expectedId = "123";
+        var expectedName = "name";
+        var expectedDisplayName = "display name";
+        var expectedLicense = "license";
+        var expectedActive = true;
+
+        final var contentRequest =
+                new CreateModuleRequest(expectedName, expectedDisplayName, expectedLicense, expectedActive);
+
+        //when
+        Mockito.when(updateModuleUseCase.execute(any()))
+                .thenReturn(UpdateModuleOutput.from(expectedId));
+
+        var request = MockMvcRequestBuilders.put("/modules/{id}", expectedId)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(contentRequest));
+
+        final var response = this.mockMvc.perform(request)
+                .andDo(print());
+
+        //then
+        response.andExpect(status().isNoContent())
+                .andExpect(header().string("Location", "/modules/123"));
+
+        verify(updateModuleUseCase, times(1)).execute(argThat(cmd -> {
+            Assertions.assertEquals(expectedId, cmd.id());
+            Assertions.assertEquals(expectedName, cmd.name());
+            Assertions.assertEquals(expectedDisplayName, cmd.displayName());
+            Assertions.assertEquals(expectedLicense, cmd.license());
+            Assertions.assertEquals(expectedActive, cmd.active());
+            return true;
+        }));
+    }
 }

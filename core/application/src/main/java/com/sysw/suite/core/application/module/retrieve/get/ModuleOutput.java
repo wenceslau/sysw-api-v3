@@ -1,5 +1,6 @@
 package com.sysw.suite.core.application.module.retrieve.get;
 
+import com.sysw.suite.core.domain.module.Module;
 import com.sysw.suite.core.domain.module.ModuleID;
 
 import java.time.Instant;
@@ -11,6 +12,18 @@ public record ModuleOutput(ModuleID id,
                            boolean active,
                            Instant createdAt,
                            Instant updateAt) {
+
+    public static ModuleOutput from(Module anModule){
+        return new ModuleOutput(
+                anModule.getId(),
+                anModule.getName(),
+                anModule.getDisplayName(),
+                anModule.getLicense(),
+                anModule.isActive(),
+                anModule.getCreatedAt(),
+                anModule.getUpdatedAt()
+        );
+    }
 
     public static ModuleOutput with(final ModuleID id,
                                     final String aName,

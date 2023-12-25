@@ -3,9 +3,13 @@ package com.sysw.suite.core.infrastructure.api.controller;
 import com.sysw.suite.core.application.module.create.CreateModuleInput;
 import com.sysw.suite.core.application.module.create.CreateModuleOutput;
 import com.sysw.suite.core.application.module.create.CreateModuleUseCase;
+import com.sysw.suite.core.application.module.retrieve.get.GetModuleUseCase;
+import com.sysw.suite.core.application.module.retrieve.get.ModuleOutput;
 import com.sysw.suite.core.domain.pagination.Pagination;
 import com.sysw.suite.core.infrastructure.api.ModuleAPI;
 import com.sysw.suite.core.infrastructure.module.models.CreateModuleRequest;
+import com.sysw.suite.core.infrastructure.module.models.ModuleResponse;
+import com.sysw.suite.core.infrastructure.module.presenters.ModuleApiPresenters;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,8 +20,11 @@ public class ModuleController implements ModuleAPI {
 
     private final CreateModuleUseCase createModuleUseCase;
 
-    public ModuleController(CreateModuleUseCase createModuleUseCase) {
+    private final GetModuleUseCase getModuleUseCase;
+
+    public ModuleController(CreateModuleUseCase createModuleUseCase, GetModuleUseCase getModuleUseCase) {
         this.createModuleUseCase = createModuleUseCase;
+        this.getModuleUseCase = getModuleUseCase;
     }
 
     @Override
@@ -42,5 +49,12 @@ public class ModuleController implements ModuleAPI {
     @Override
     public Pagination<?> listCategories(String search, Integer page, Integer perPage, String sort, String direction) {
         return null;
+    }
+
+
+    @Override
+    public ModuleResponse getModule(String id) {
+        ModuleOutput execute = getModuleUseCase.execute(id);
+        return ModuleApiPresenters.present(execute);
     }
 }

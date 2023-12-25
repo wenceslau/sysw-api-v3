@@ -26,6 +26,7 @@ public class ModuleID extends Identifier {
         return new ModuleID(anId.toString().toLowerCase());
     }
 
+    @Override
     public String getValue() {
         return value;
     }

@@ -2,6 +2,7 @@ package com.sysw.suite.core.infrastructure.api;
 
 import com.sysw.suite.core.domain.pagination.Pagination;
 import com.sysw.suite.core.infrastructure.module.models.CreateModuleRequest;
+import com.sysw.suite.core.infrastructure.module.models.ModuleResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -41,4 +42,17 @@ public interface ModuleAPI {
             @RequestParam(name = "sort", required = false, defaultValue = "createdAt") String sort,
             @RequestParam(name = "direction", required = false, defaultValue = "asc") String direction
     );
+
+    @GetMapping( value = "/{id}",
+            produces = MediaType.APPLICATION_JSON_VALUE,
+            consumes = MediaType.APPLICATION_JSON_VALUE
+    )
+    @Operation(summary = "Get module by id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Module found"),
+            @ApiResponse(responseCode = "404", description = "Module not found"),
+            @ApiResponse(responseCode = "422", description = "Invalid request"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")
+    })
+    ModuleResponse getModule(@PathVariable("id") String id);
 }

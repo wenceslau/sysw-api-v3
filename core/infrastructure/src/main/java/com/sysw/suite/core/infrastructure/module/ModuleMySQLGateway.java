@@ -1,9 +1,8 @@
 package com.sysw.suite.core.infrastructure.module;
 
+import com.sysw.suite.core.domain.enums.Operator;
+import com.sysw.suite.core.domain.module.*;
 import com.sysw.suite.core.domain.module.Module;
-import com.sysw.suite.core.domain.module.ModuleGateway;
-import com.sysw.suite.core.domain.module.ModuleID;
-import com.sysw.suite.core.domain.module.ModuleSearchQuery;
 import com.sysw.suite.core.domain.pagination.Pagination;
 import com.sysw.suite.core.infrastructure.module.persistence.ModuleJpaEntity;
 import com.sysw.suite.core.infrastructure.module.persistence.ModuleRepository;
@@ -49,26 +48,49 @@ public class ModuleMySQLGateway implements ModuleGateway {
         return save(aModule);
     }
 
+//    public Pagination<Module> findAlls(ModuleSearchQuery aQuery) {
+//
+//        //Pagination
+//        PageRequest pageRequest = PageRequest.of(
+//                aQuery.page(),
+//                aQuery.perPage(),
+//                Sort.by(Sort.Direction.fromString(aQuery.direction().name()), aQuery.sortBy())
+//        );
+//
+//        //Dynamic query by terms name and displayName
+//        var specification = Optional.ofNullable(aQuery.terms())
+//                .filter(terms -> !terms.isBlank())
+//                .map(terms -> {
+//                            Specification<ModuleJpaEntity> nameLike = SpecificationUtils.like("name", terms);
+//                            Specification<ModuleJpaEntity> displayNameLike = SpecificationUtils.like("displayName", terms);
+//                            return nameLike.or(displayNameLike);
+//                        }
+//                )
+//                .orElse(null);
+//
+//        //Execute the query
+//        var pageResult = this.repository.findAll(Specification.where(specification), pageRequest);
+//
+//        return new Pagination<>(
+//                pageResult.getNumber(),
+//                pageResult.getSize(),
+//                pageResult.getTotalElements(),
+//                pageResult.map(ModuleJpaEntity::toAggregate)
+//                        .toList()
+//        );
+//    }
+
     @Override
     public Pagination<Module> findAll(ModuleSearchQuery aQuery) {
-
         //Pagination
         PageRequest pageRequest = PageRequest.of(
                 aQuery.page(),
                 aQuery.perPage(),
-                Sort.by(Sort.Direction.fromString(aQuery.direction()), aQuery.sort())
+                Sort.by(Sort.Direction.fromString(aQuery.direction().name()), aQuery.sortBy())
         );
 
         //Dynamic query by terms name and displayName
-        var specification = Optional.ofNullable(aQuery.terms())
-                .filter(terms -> !terms.isBlank())
-                .map(terms -> {
-                            Specification<ModuleJpaEntity> nameLike = SpecificationUtils.like("name", terms);
-                            Specification<ModuleJpaEntity> displayNameLike = SpecificationUtils.like("displayName", terms);
-                            return nameLike.or(displayNameLike);
-                        }
-                )
-                .orElse(null);
+        var specification = prepareSpecification(aQuery.fields(), aQuery.operators(), aQuery.terms());
 
         //Execute the query
         var pageResult = this.repository.findAll(Specification.where(specification), pageRequest);
@@ -85,6 +107,17 @@ public class ModuleMySQLGateway implements ModuleGateway {
     private Module save(Module aModule) {
         return repository.save(ModuleJpaEntity.from(aModule))
                 .toAggregate();
+    }
+
+    private Specification<ModuleJpaEntity> prepareSpecification(String[] fields, Operator[] operators, Object[] terms) {
+        if (fields == null ||fields.length ==0) {
+            return null;
+        }
+        Specification<ModuleJpaEntity> spec = SpecificationUtils.clause(fields[0], operators[0], terms[0]);
+        for (int i = 1; i <  fields.length; i++) {
+            spec = spec.and(SpecificationUtils.clause(fields[i], operators[i], terms[i]));
+        }
+        return spec;
     }
 
 }

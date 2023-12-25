@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.time.Instant;
 
-public record ModuleResponse(
+public record ModuleGetResponse(
         @JsonProperty("id") String id,
         @JsonProperty("name") String name,
         @JsonProperty("display_name") String displayName,

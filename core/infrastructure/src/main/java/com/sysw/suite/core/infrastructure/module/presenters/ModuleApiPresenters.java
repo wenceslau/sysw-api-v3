@@ -1,12 +1,26 @@
 package com.sysw.suite.core.infrastructure.module.presenters;
 
-import com.sysw.suite.core.application.module.retrieve.get.ModuleOutput;
-import com.sysw.suite.core.infrastructure.module.models.ModuleResponse;
+import com.sysw.suite.core.application.module.retrieve.get.ModuleGetOutput;
+import com.sysw.suite.core.application.module.retrieve.list.ModuleListOutput;
+import com.sysw.suite.core.infrastructure.module.models.ModuleGetResponse;
+import com.sysw.suite.core.infrastructure.module.models.ModuleListResponse;
 
 public interface ModuleApiPresenters {
 
-    static ModuleResponse present(final ModuleOutput moduleOutput){
-        return new ModuleResponse(
+    static ModuleGetResponse present(final ModuleGetOutput moduleGetOutput){
+        return new ModuleGetResponse(
+                moduleGetOutput.id().getValue(),
+                moduleGetOutput.name(),
+                moduleGetOutput.displayName(),
+                moduleGetOutput.license(),
+                moduleGetOutput.active(),
+                moduleGetOutput.createdAt(),
+                moduleGetOutput.updateAt()
+        );
+    }
+
+    static ModuleListResponse present(final ModuleListOutput moduleOutput){
+        return new ModuleListResponse(
                 moduleOutput.id().getValue(),
                 moduleOutput.name(),
                 moduleOutput.displayName(),
@@ -16,4 +30,5 @@ public interface ModuleApiPresenters {
                 moduleOutput.updateAt()
         );
     }
+
 }

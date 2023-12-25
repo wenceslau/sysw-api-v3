@@ -8,7 +8,7 @@ import com.sysw.suite.core.domain.module.ModuleID;
 import java.util.Objects;
 import java.util.function.Supplier;
 
-public class GetModuleUseCase extends UseCase<String, ModuleOutput> {
+public class GetModuleUseCase extends UseCase<String, ModuleGetOutput> {
 
     private final ModuleGateway moduleGateway;
 
@@ -17,12 +17,12 @@ public class GetModuleUseCase extends UseCase<String, ModuleOutput> {
     }
 
     @Override
-    public ModuleOutput execute(final String anId) {
+    public ModuleGetOutput execute(final String anId) {
 
         ModuleID aModuleID = ModuleID.from(anId);
         Module module = moduleGateway.findById(aModuleID).orElseThrow(notFound(aModuleID));
 
-        return ModuleOutput.with(module.getId(), module.getName(), module.getDisplayName(),
+        return ModuleGetOutput.with(module.getId(), module.getName(), module.getDisplayName(),
                 module.getLicense(), module.isActive(), module.getCreatedAt(), module.getUpdatedAt());
     }
 

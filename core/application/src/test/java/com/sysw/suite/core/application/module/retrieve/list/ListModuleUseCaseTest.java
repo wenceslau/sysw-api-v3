@@ -60,8 +60,8 @@ public class ListModuleUseCaseTest {
         Assertions.assertEquals(expectedPage, result.currentPage());
         Assertions.assertEquals(expectedPerPage, result.perPage());
         Assertions.assertEquals(moduleList.size(), result.total());
-        Assertions.assertEquals(moduleList.size(), result.itens().size());
-        Assertions.assertTrue(result.itens().stream().allMatch(ModuleListOutput.class::isInstance));
+        Assertions.assertEquals(moduleList.size(), result.items().size());
+        Assertions.assertTrue(result.items().stream().allMatch(ModuleListOutput.class::isInstance));
 
     }
 
@@ -87,8 +87,8 @@ public class ListModuleUseCaseTest {
         Assertions.assertEquals(expectedPage, result.currentPage());
         Assertions.assertEquals(expectedPerPage, result.perPage());
         Assertions.assertEquals(moduleList.size(), result.total());
-        Assertions.assertEquals(moduleList.size(), result.itens().size());
-        Assertions.assertTrue(result.itens().stream().allMatch(ModuleListOutput.class::isInstance));
+        Assertions.assertEquals(moduleList.size(), result.items().size());
+        Assertions.assertTrue(result.items().stream().allMatch(ModuleListOutput.class::isInstance));
 
     }
 
@@ -115,6 +115,6 @@ public class ListModuleUseCaseTest {
         // Assert and Verify
         Mockito.verify(moduleGateway, Mockito.times(1)).findAll((ModuleSearchQuery) Mockito.any());
         Assertions.assertEquals(modules.total(), result.total());
-        Assertions.assertTrue(result.itens().stream().allMatch(ModuleListOutput.class::isInstance));
+        Assertions.assertTrue(result.items().stream().allMatch(ModuleListOutput.class::isInstance));
     }
 }

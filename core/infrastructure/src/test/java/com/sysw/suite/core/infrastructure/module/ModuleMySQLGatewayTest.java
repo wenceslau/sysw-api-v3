@@ -1,6 +1,5 @@
 package com.sysw.suite.core.infrastructure.module;
 
-import com.sysw.suite.core.domain.enums.Direction;
 import com.sysw.suite.core.domain.enums.Operator;
 import com.sysw.suite.core.domain.module.Module;
 import com.sysw.suite.core.domain.module.ModuleID;
@@ -222,8 +221,8 @@ class ModuleMySQLGatewayTest {
         assertEquals(expectedPage, modulesFound.currentPage());
         assertEquals(expectedPerPage, modulesFound.perPage());
         assertEquals(expectedTotal, modulesFound.total());
-        assertEquals(1, modulesFound.itens().size());
-        assertEquals(createdModuleEntity1.getId(), modulesFound.itens().get(0).getId().getValue());
+        assertEquals(1, modulesFound.items().size());
+        assertEquals(createdModuleEntity1.getId(), modulesFound.items().get(0).getId().getValue());
 
 
     }
@@ -243,7 +242,7 @@ class ModuleMySQLGatewayTest {
         assertEquals(expectedPage, modulesFound.currentPage());
         assertEquals(expectedPerPage, modulesFound.perPage());
         assertEquals(expectedTotal, modulesFound.total());
-        assertEquals(0, modulesFound.itens().size());
+        assertEquals(0, modulesFound.items().size());
     }
 
     @Test
@@ -269,8 +268,8 @@ class ModuleMySQLGatewayTest {
         assertEquals(1, modulesFound.currentPage());
         assertEquals(expectedPerPage, modulesFound.perPage());
         assertEquals(expectedTotal, modulesFound.total());
-        assertEquals(1, modulesFound.itens().size());
-        assertEquals(createdModuleEntity2.getId(), modulesFound.itens().get(0).getId().getValue());
+        assertEquals(1, modulesFound.items().size());
+        assertEquals(createdModuleEntity2.getId(), modulesFound.items().get(0).getId().getValue());
 
         //When Page 2
         query = ModuleSearchQuery.with(2, 1, "name", ASC);
@@ -280,8 +279,8 @@ class ModuleMySQLGatewayTest {
         assertEquals(2, modulesFound.currentPage());
         assertEquals(expectedPerPage, modulesFound.perPage());
         assertEquals(expectedTotal, modulesFound.total());
-        assertEquals(1, modulesFound.itens().size());
-        assertEquals(createdModuleEntity3.getId(), modulesFound.itens().get(0).getId().getValue());
+        assertEquals(1, modulesFound.items().size());
+        assertEquals(createdModuleEntity3.getId(), modulesFound.items().get(0).getId().getValue());
 
 
     }
@@ -311,8 +310,8 @@ class ModuleMySQLGatewayTest {
         assertEquals(expectedPage, modulesFound.currentPage());
         assertEquals(expectedPerPage, modulesFound.perPage());
         assertEquals(expectedTotal, modulesFound.total());
-        assertEquals(1, modulesFound.itens().size());
-        assertEquals(createdModuleEntity1.getId(), modulesFound.itens().get(0).getId().getValue());
+        assertEquals(1, modulesFound.items().size());
+        assertEquals(createdModuleEntity1.getId(), modulesFound.items().get(0).getId().getValue());
 
 
     }
@@ -342,8 +341,8 @@ class ModuleMySQLGatewayTest {
         assertEquals(expectedPage, modulesFound.currentPage());
         assertEquals(expectedPerPage, modulesFound.perPage());
         assertEquals(expectedTotal, modulesFound.total());
-        assertEquals(1, modulesFound.itens().size());
-        assertEquals(createdModuleEntity2.getId(), modulesFound.itens().get(0).getId().getValue());
+        assertEquals(1, modulesFound.items().size());
+        assertEquals(createdModuleEntity2.getId(), modulesFound.items().get(0).getId().getValue());
 
     }
 
@@ -375,8 +374,8 @@ class ModuleMySQLGatewayTest {
         assertEquals(expectedPage, modulesFound.currentPage());
         assertEquals(expectedPerPage, modulesFound.perPage());
         assertEquals(expectedTotal, modulesFound.total());
-        assertEquals(expectedTotal, modulesFound.itens().size());
-        assertEquals(createdModuleEntity1.getId(), modulesFound.itens().get(0).getId().getValue());
+        assertEquals(expectedTotal, modulesFound.items().size());
+        assertEquals(createdModuleEntity1.getId(), modulesFound.items().get(0).getId().getValue());
 
     }
 
@@ -410,8 +409,8 @@ class ModuleMySQLGatewayTest {
         assertEquals(expectedPage, modulesFound.currentPage());
         assertEquals(expectedPerPage, modulesFound.perPage());
         assertEquals(expectedTotal, modulesFound.total());
-        assertEquals(expectedTotal, modulesFound.itens().size());
-        assertEquals(createdModuleEntity1.getId(), modulesFound.itens().get(0).getId().getValue());
+        assertEquals(expectedTotal, modulesFound.items().size());
+        assertEquals(createdModuleEntity1.getId(), modulesFound.items().get(0).getId().getValue());
 
     }
 
@@ -443,8 +442,8 @@ class ModuleMySQLGatewayTest {
         assertEquals(expectedPage, modulesFound.currentPage());
         assertEquals(expectedPerPage, modulesFound.perPage());
         assertEquals(expectedTotal, modulesFound.total());
-        assertEquals(expectedTotal, modulesFound.itens().size());
-        assertEquals(createdModuleEntity1.getId(), modulesFound.itens().get(0).getId().getValue());
+        assertEquals(expectedTotal, modulesFound.items().size());
+        assertEquals(createdModuleEntity1.getId(), modulesFound.items().get(0).getId().getValue());
 
     }
 
@@ -476,7 +475,7 @@ class ModuleMySQLGatewayTest {
         assertEquals(expectedPage, modulesFound.currentPage());
         assertEquals(expectedPerPage, modulesFound.perPage());
         assertEquals(expectedTotal, modulesFound.total());
-        assertEquals(expectedTotal, modulesFound.itens().size());
+        assertEquals(expectedTotal, modulesFound.items().size());
 
     }
 

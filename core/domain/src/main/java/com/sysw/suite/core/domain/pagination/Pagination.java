@@ -7,11 +7,11 @@ public record Pagination<T>(
         int currentPage,
         int perPage,
         long total,
-        List<T> itens
+        List<T> items
 ) {
 
     public <R> Pagination<R> map(final Function<T, R> mapper){
-        List<R> aNewList = this.itens().stream()
+        List<R> aNewList = this.items().stream()
                 .map(mapper)
                 .toList();
         return new Pagination<>(currentPage(),perPage(), total(), aNewList);

@@ -19,12 +19,12 @@ import java.lang.annotation.Target;
  */
 @ComponentScan(includeFilters = {
         @ComponentScan.Filter(type = FilterType.REGEX, pattern = ".[MySQLGateway]")    // The pattern is used to scan the package where the JPA repositories are located.
-})                                                                                      // This annotation is used to scan the package where the JPA repositories are located. Also, it is used to exclude the other repositories.
+})                                                                                     // This annotation is used to scan the package where the JPA repositories are located. Also, it is used to exclude the other repositories.
 @Target(ElementType.TYPE)
 @Retention(java.lang.annotation.RetentionPolicy.RUNTIME)
 @Inherited
-@ActiveProfiles("test")
+@ActiveProfiles("test-integration")
 @DataJpaTest                                                                            // This annotation is used to test JPA repositories, it will load only the JPA configuration.
-@ExtendWith(CleanUpExtension.class)                                                     // This annotation is used to execute the method beforeEach before each test.
+@ExtendWith(MySQLCleanUpExtension.class)                                                // This annotation is used to execute the method beforeEach before each test.
 public @interface MySQLGatewayTest {
 }

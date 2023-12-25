@@ -1,6 +1,6 @@
 package com.sysw.suite.core.application.module.retrieve.get;
 
-import com.sysw.suite.core.domain.exception.DomainException;
+import com.sysw.suite.core.domain.exception.NotFoundException;
 import com.sysw.suite.core.domain.module.Module;
 import com.sysw.suite.core.domain.module.ModuleGateway;
 import com.sysw.suite.core.domain.module.ModuleID;
@@ -38,7 +38,7 @@ public class GetModuleUseCaseTest {
 
         // When
         when(moduleGateway.findById(ModuleID.from(id))).thenReturn(Optional.of(expectedModule));
-        ModuleOutput output = useCase.execute(id);
+        ModuleGetOutput output = useCase.execute(id);
 
         // Then
         assertNotNull(output);
@@ -60,7 +60,7 @@ public class GetModuleUseCaseTest {
         when(moduleGateway.findById(moduleId)).thenReturn(Optional.of(module));
 
         //When
-        ModuleOutput result = useCase.execute("1");
+        ModuleGetOutput result = useCase.execute("1");
 
         //Then
         assertEquals(moduleId, result.id());
@@ -77,10 +77,10 @@ public class GetModuleUseCaseTest {
         when(moduleGateway.findById(moduleId)).thenReturn(Optional.empty());
 
         //When
-        DomainException exception = assertThrows(DomainException.class, () -> useCase.execute("1"));
+        var exception = assertThrows(NotFoundException.class, () -> useCase.execute("1"));
 
         //Then
-        assertTrue(exception.getMessage().contains("Module with ID 1 not found"));
+        assertEquals("The Module with id 1 was not found", exception.getMessage());
     }
 
 }

@@ -2,37 +2,24 @@ package com.sysw.suite.core.application.retrieve.list;
 
 import com.sysw.suite.core.IntegrationTest;
 import com.sysw.suite.core.application.module.retrieve.list.ListModuleUseCase;
-import com.sysw.suite.core.application.module.retrieve.list.ModuleListOutput;
 import com.sysw.suite.core.domain.enums.Direction;
 import com.sysw.suite.core.domain.enums.Operator;
 import com.sysw.suite.core.domain.module.Module;
-import com.sysw.suite.core.domain.module.ModuleGateway;
-import com.sysw.suite.core.domain.module.ModuleID;
 import com.sysw.suite.core.domain.module.ModuleSearchQuery;
-import com.sysw.suite.core.domain.pagination.Pagination;
 import com.sysw.suite.core.infrastructure.module.persistence.ModuleJpaEntity;
 import com.sysw.suite.core.infrastructure.module.persistence.ModuleRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.SpyBean;
 
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 import java.util.stream.Stream;
 
 import static com.sysw.suite.core.domain.enums.Direction.ASC;
 import static com.sysw.suite.core.domain.enums.Operator.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @IntegrationTest
 public class ListModuleUseCaseIT {
@@ -79,7 +66,7 @@ public class ListModuleUseCaseIT {
 
         final var actualResult = useCase.execute(aQuery);
 
-        Assertions.assertEquals(expectedItemsCount, actualResult.itens().size());
+        Assertions.assertEquals(expectedItemsCount, actualResult.items().size());
         Assertions.assertEquals(expectedPage, actualResult.currentPage());
         Assertions.assertEquals(expectedPerPage, actualResult.perPage());
         Assertions.assertEquals(expectedTotal, actualResult.total());
@@ -106,11 +93,11 @@ public class ListModuleUseCaseIT {
 
         final var actualResult = useCase.execute(aQuery);
 
-        Assertions.assertEquals(expectedItemsCount, actualResult.itens().size());
+        Assertions.assertEquals(expectedItemsCount, actualResult.items().size());
         Assertions.assertEquals(expectedPage, actualResult.currentPage());
         Assertions.assertEquals(expectedPerPage, actualResult.perPage());
         Assertions.assertEquals(expectedTotal, actualResult.total());
-        Assertions.assertEquals(expectedName, actualResult.itens().get(0).name());
+        Assertions.assertEquals(expectedName, actualResult.items().get(0).name());
     }
 
     @ParameterizedTest
@@ -138,11 +125,11 @@ public class ListModuleUseCaseIT {
 
         final var actualResult = useCase.execute(aQuery);
 
-        Assertions.assertEquals(expectedItemsCount, actualResult.itens().size());
+        Assertions.assertEquals(expectedItemsCount, actualResult.items().size());
         Assertions.assertEquals(expectedPage, actualResult.currentPage());
         Assertions.assertEquals(expectedPerPage, actualResult.perPage());
         Assertions.assertEquals(expectedTotal, actualResult.total());
-        Assertions.assertEquals(expectedCategoryName, actualResult.itens().get(0).name());
+        Assertions.assertEquals(expectedCategoryName, actualResult.items().get(0).name());
     }
 
     @ParameterizedTest
@@ -167,14 +154,14 @@ public class ListModuleUseCaseIT {
 
         final var actualResult = useCase.execute(aQuery);
 
-        Assertions.assertEquals(expectedItemsCount, actualResult.itens().size());
+        Assertions.assertEquals(expectedItemsCount, actualResult.items().size());
         Assertions.assertEquals(expectedPage, actualResult.currentPage());
         Assertions.assertEquals(expectedPerPage, actualResult.perPage());
         Assertions.assertEquals(expectedTotal, actualResult.total());
 
         int index = 0;
         for (final String name : expectedName.split(";")) {
-            final String actualName = actualResult.itens().get(index).name();
+            final String actualName = actualResult.items().get(index).name();
             Assertions.assertEquals(name, actualName);
             index++;
         }
@@ -221,12 +208,12 @@ public class ListModuleUseCaseIT {
 
         Assertions.assertEquals(expectedPage, actualResult.currentPage());
         Assertions.assertEquals(expectedPerPage, actualResult.perPage());
-        Assertions.assertEquals(expectedItemsCount, actualResult.itens().size());
+        Assertions.assertEquals(expectedItemsCount, actualResult.items().size());
         Assertions.assertEquals(expectedTotal, actualResult.total());
 
         int index = 0;
         for (final String name : expectedName.split(";")) {
-            final String actualName = actualResult.itens().get(index).name();
+            final String actualName = actualResult.items().get(index).name();
             Assertions.assertEquals(name, actualName);
             index++;
         }
@@ -258,12 +245,12 @@ public class ListModuleUseCaseIT {
 
         Assertions.assertEquals(expectedPage, actualResult.currentPage());
         Assertions.assertEquals(expectedPerPage, actualResult.perPage());
-        Assertions.assertEquals(expectedItemsCount, actualResult.itens().size());
+        Assertions.assertEquals(expectedItemsCount, actualResult.items().size());
         Assertions.assertEquals(expectedTotal, actualResult.total());
 
         int index = 0;
         for (final String name : expectedName.split(";")) {
-            final String actualName = actualResult.itens().get(index).name();
+            final String actualName = actualResult.items().get(index).name();
             Assertions.assertEquals(name, actualName);
             index++;
         }
@@ -295,12 +282,12 @@ public class ListModuleUseCaseIT {
 
         Assertions.assertEquals(expectedPage, actualResult.currentPage());
         Assertions.assertEquals(expectedPerPage, actualResult.perPage());
-        Assertions.assertEquals(expectedItemsCount, actualResult.itens().size());
+        Assertions.assertEquals(expectedItemsCount, actualResult.items().size());
         Assertions.assertEquals(expectedTotal, actualResult.total());
 
         int index = 0;
         for (final String name : expectedName.split(";")) {
-            final String actualName = actualResult.itens().get(index).name();
+            final String actualName = actualResult.items().get(index).name();
             Assertions.assertEquals(name, actualName);
             index++;
         }
@@ -331,7 +318,7 @@ public class ListModuleUseCaseIT {
 
         Assertions.assertEquals(expectedPage, actualResult.currentPage());
         Assertions.assertEquals(expectedPerPage, actualResult.perPage());
-        Assertions.assertEquals(expectedItemsCount, actualResult.itens().size());
+        Assertions.assertEquals(expectedItemsCount, actualResult.items().size());
         Assertions.assertEquals(expectedTotal, actualResult.total());
 
     }

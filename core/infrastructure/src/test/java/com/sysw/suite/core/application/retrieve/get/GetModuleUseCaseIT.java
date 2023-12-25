@@ -2,25 +2,19 @@ package com.sysw.suite.core.application.retrieve.get;
 
 import com.sysw.suite.core.IntegrationTest;
 import com.sysw.suite.core.application.module.retrieve.get.GetModuleUseCase;
-import com.sysw.suite.core.application.module.retrieve.get.ModuleOutput;
+import com.sysw.suite.core.application.module.retrieve.get.ModuleGetOutput;
 import com.sysw.suite.core.domain.exception.DomainException;
 import com.sysw.suite.core.domain.module.Module;
 import com.sysw.suite.core.domain.module.ModuleGateway;
 import com.sysw.suite.core.domain.module.ModuleID;
 import com.sysw.suite.core.infrastructure.module.persistence.ModuleJpaEntity;
 import com.sysw.suite.core.infrastructure.module.persistence.ModuleRepository;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 
 import java.util.Arrays;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -46,7 +40,7 @@ public class GetModuleUseCaseIT {
         assertEquals(1, moduleRepository.count());
 
         // When
-        ModuleOutput output = useCase.execute(id);
+        ModuleGetOutput output = useCase.execute(id);
 
         // Then
         assertNotNull(output);
@@ -68,7 +62,7 @@ public class GetModuleUseCaseIT {
         assertEquals(1, moduleRepository.count());
 
         //When
-        ModuleOutput result = useCase.execute("1");
+        ModuleGetOutput result = useCase.execute("1");
 
         //Then
         assertEquals(moduleId, result.id());

@@ -4,7 +4,6 @@ import com.sysw.suite.core.domain.exception.DomainException;
 import com.sysw.suite.core.domain.module.Module;
 import com.sysw.suite.core.domain.module.ModuleGateway;
 import com.sysw.suite.core.domain.module.ModuleID;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -76,51 +75,5 @@ public class UpdateModuleUseCaseTest {
         verify(moduleGateway, times(1)).findById(any());
         verify(moduleGateway, times(0)).update(any());
 
-    }
-
-    @Test
-    public void testExecute() {
-        final String moduleId = "moduleId";
-        final String name = "name";
-        final String displayName = "displayName";
-        final String license = "license";
-        final boolean isActive = true;
-
-        Module moduleMock = Mockito.mock(Module.class);
-        Mockito.when(moduleMock.update(name, displayName, license, isActive)).thenReturn(moduleMock);
-
-        ModuleGateway moduleGatewayMock = Mockito.mock(ModuleGateway.class);
-        Mockito.when(moduleGatewayMock.findById(ModuleID.from(moduleId))).thenReturn(Optional.of(moduleMock));
-        Mockito.when(moduleGatewayMock.update(moduleMock)).thenReturn(moduleMock);
-
-        UpdateModuleUseCase testObj = new UpdateModuleUseCase(moduleGatewayMock);
-        UpdateModuleInput input = UpdateModuleInput.with(moduleId, name, displayName, license, isActive);
-        UpdateModuleOutput output = testObj.execute(input);
-
-        Mockito.verify(moduleMock).validate(Mockito.any());
-        Mockito.verify(moduleGatewayMock).findById(Mockito.any());
-        Mockito.verify(moduleGatewayMock).update(Mockito.any());
-
-        Assertions.assertSame(moduleMock.getId(), output.id());
-    }
-
-    @Test
-    public void testExecuteModuleNotFoundException() {
-        final String moduleId = "moduleId";
-        final String name = "name";
-        final String displayName = "displayName";
-        final String license = "license";
-        final boolean isActive = true;
-
-        ModuleGateway moduleGatewayMock = Mockito.mock(ModuleGateway.class);
-        Mockito.when(moduleGatewayMock.findById(ModuleID.from(moduleId))).thenReturn(Optional.empty());
-
-        UpdateModuleUseCase testObj = new UpdateModuleUseCase(moduleGatewayMock);
-        UpdateModuleInput input = UpdateModuleInput.with(moduleId, name, displayName, license, isActive);
-
-        Assertions.assertThrows(DomainException.class, () -> testObj.execute(input));
-
-        Mockito.verify(moduleGatewayMock).findById(Mockito.any());
-        Mockito.verifyNoMoreInteractions(moduleGatewayMock);
     }
 }

@@ -2,7 +2,7 @@ package com.sysw.suite.core.infrastructure.api;
 
 import com.sysw.suite.core.domain.pagination.Pagination;
 import com.sysw.suite.core.infrastructure.module.models.CreateModuleRequest;
-import com.sysw.suite.core.infrastructure.module.models.ModuleResponse;
+import com.sysw.suite.core.infrastructure.module.models.ModuleGetResponse;
 import com.sysw.suite.core.infrastructure.module.models.UpdateModuleRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -55,7 +55,7 @@ public interface ModuleAPI {
             @ApiResponse(responseCode = "422", description = "Invalid request"),
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
-    ModuleResponse getModule(@PathVariable("id") String id);
+    ModuleGetResponse getModule(@PathVariable("id") String id);
 
     @PutMapping( value = "/{id}",
             produces = MediaType.APPLICATION_JSON_VALUE,

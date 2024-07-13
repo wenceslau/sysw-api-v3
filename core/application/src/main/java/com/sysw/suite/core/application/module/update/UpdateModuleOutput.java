@@ -1,6 +1,6 @@
 package com.sysw.suite.core.application.module.update;
 
-import com.sysw.suite.core.domain.module.Module;
+import com.sysw.suite.core.domain.business.module.Module;
 
 public record UpdateModuleOutput(String id) {
 

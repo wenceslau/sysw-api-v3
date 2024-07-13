@@ -1,4 +1,4 @@
-package com.sysw.suite.core.domain.enums;
+package com.sysw.suite.core.pagination;
 
 public enum Direction {
     ASC, DESC;

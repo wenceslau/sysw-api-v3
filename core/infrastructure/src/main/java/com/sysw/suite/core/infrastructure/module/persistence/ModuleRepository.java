@@ -5,7 +5,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface ModuleRepository extends JpaRepository<ModuleJpaEntity, String> {
+public interface ModuleRepository extends JpaRepository<ModuleJPA, String> {
 
-    Page<ModuleJpaEntity> findAll(Specification<ModuleJpaEntity> whereClause, Pageable page);
+    Page<ModuleJPA> findAll(Specification<ModuleJPA> whereClause, Pageable page);
 }

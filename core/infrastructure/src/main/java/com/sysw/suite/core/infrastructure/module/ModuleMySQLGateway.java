@@ -1,10 +1,13 @@
 package com.sysw.suite.core.infrastructure.module;
 
-import com.sysw.suite.core.domain.enums.Operator;
+import com.sysw.suite.core.domain.business.module.ModuleGateway;
+import com.sysw.suite.core.domain.business.module.ModuleID;
+import com.sysw.suite.core.domain.business.module.SearchQuery;
+import com.sysw.suite.core.pagination.Operator;
 import com.sysw.suite.core.domain.module.*;
-import com.sysw.suite.core.domain.module.Module;
-import com.sysw.suite.core.domain.pagination.Pagination;
-import com.sysw.suite.core.infrastructure.module.persistence.ModuleJpaEntity;
+import com.sysw.suite.core.domain.business.module.Module;
+import com.sysw.suite.core.pagination.Pagination;
+import com.sysw.suite.core.infrastructure.module.persistence.ModuleJPA;
 import com.sysw.suite.core.infrastructure.module.persistence.ModuleRepository;
 import com.sysw.suite.core.infrastructure.utils.SpecificationUtils;
 import org.springframework.data.domain.PageRequest;
@@ -40,7 +43,7 @@ public class ModuleMySQLGateway implements ModuleGateway {
     public Optional<Module> findById(ModuleID anId) {
         // If not exist, the map is not executed, and the Optional is empty
         return repository.findById(anId.getValue())
-                .map(ModuleJpaEntity::toAggregate);
+                .map(ModuleJPA::toAggregate);
     }
 
     @Override
@@ -81,7 +84,7 @@ public class ModuleMySQLGateway implements ModuleGateway {
 //    }
 
     @Override
-    public Pagination<Module> findAll(ModuleSearchQuery aQuery) {
+    public Pagination<Module> findAll(SearchQuery aQuery) {
         //Pagination
         PageRequest pageRequest = PageRequest.of(
                 aQuery.page(),
@@ -99,21 +102,21 @@ public class ModuleMySQLGateway implements ModuleGateway {
                 pageResult.getNumber(),
                 pageResult.getSize(),
                 pageResult.getTotalElements(),
-                pageResult.map(ModuleJpaEntity::toAggregate)
+                pageResult.map(ModuleJPA::toAggregate)
                         .toList()
         );
     }
 
     private Module save(Module aModule) {
-        return repository.save(ModuleJpaEntity.from(aModule))
+        return repository.save(ModuleJPA.from(aModule))
                 .toAggregate();
     }
 
-    private Specification<ModuleJpaEntity> prepareSpecification(String[] fields, Operator[] operators, Object[] terms) {
+    private Specification<ModuleJPA> prepareSpecification(String[] fields, Operator[] operators, Object[] terms) {
         if (fields == null ||fields.length ==0) {
             return null;
         }
-        Specification<ModuleJpaEntity> spec = SpecificationUtils.clause(fields[0], operators[0], terms[0]);
+        Specification<ModuleJPA> spec = SpecificationUtils.clause(fields[0], operators[0], terms[0]);
         for (int i = 1; i <  fields.length; i++) {
             spec = spec.and(SpecificationUtils.clause(fields[i], operators[i], terms[i]));
         }

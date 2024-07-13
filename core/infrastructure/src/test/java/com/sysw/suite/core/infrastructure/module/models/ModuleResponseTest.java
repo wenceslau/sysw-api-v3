@@ -10,10 +10,10 @@ import java.time.Instant;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @JacksonTest
-class ModuleListResponseTest {
+class ModuleResponseTest {
 
     @Autowired
-    private JacksonTester<ModuleListResponse> json;
+    private JacksonTester<ModuleResponse> json;
 
     @Test
     public void testMarshal() throws Exception {
@@ -25,7 +25,7 @@ class ModuleListResponseTest {
         final var expectedCreatedAt = Instant.now();
         final var expectedUpdatedAt = Instant.now();
 
-        final var categoryGetResponse = new ModuleListResponse(
+        final var categoryGetResponse = new ModuleResponse(
                 expectedId,
                 expectedName,
                 expectedDisplayName,

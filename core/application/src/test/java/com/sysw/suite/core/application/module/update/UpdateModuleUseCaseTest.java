@@ -1,9 +1,9 @@
 package com.sysw.suite.core.application.module.update;
 
 import com.sysw.suite.core.domain.exception.DomainException;
-import com.sysw.suite.core.domain.module.Module;
-import com.sysw.suite.core.domain.module.ModuleGateway;
-import com.sysw.suite.core.domain.module.ModuleID;
+import com.sysw.suite.core.domain.business.module.Module;
+import com.sysw.suite.core.domain.business.module.ModuleGateway;
+import com.sysw.suite.core.domain.business.module.ModuleID;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

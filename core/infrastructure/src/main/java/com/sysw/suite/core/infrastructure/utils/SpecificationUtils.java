@@ -1,6 +1,6 @@
 package com.sysw.suite.core.infrastructure.utils;
 
-import com.sysw.suite.core.domain.enums.Operator;
+import com.sysw.suite.core.pagination.Operator;
 import jakarta.persistence.criteria.Path;
 import jakarta.persistence.criteria.Root;
 import org.springframework.data.jpa.domain.Specification;
@@ -12,8 +12,6 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.temporal.Temporal;
 import java.util.List;
-
-import static com.sysw.suite.core.domain.enums.Operator.*;
 
 public final class SpecificationUtils {
 

@@ -1,10 +1,10 @@
 package com.sysw.suite.core.infrastructure.configuration.usecases;
 
 import com.sysw.suite.core.application.module.create.CreateModuleUseCase;
-import com.sysw.suite.core.application.module.retrieve.get.GetModuleUseCase;
+import com.sysw.suite.core.application.module.retrieve.get.GetModuleByIDUseCase;
 import com.sysw.suite.core.application.module.retrieve.list.ListModuleUseCase;
 import com.sysw.suite.core.application.module.update.UpdateModuleUseCase;
-import com.sysw.suite.core.domain.module.ModuleGateway;
+import com.sysw.suite.core.domain.business.module.ModuleGateway;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -28,8 +28,8 @@ public class ModuleUseCaseConfig {
     }
 
     @Bean
-    public GetModuleUseCase getModuleByIdUseCase() {
-        return new GetModuleUseCase(gateway);
+    public GetModuleByIDUseCase getModuleByIdUseCase() {
+        return new GetModuleByIDUseCase(gateway);
     }
 
     @Bean

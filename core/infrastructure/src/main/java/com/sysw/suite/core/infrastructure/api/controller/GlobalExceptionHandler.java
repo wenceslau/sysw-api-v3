@@ -1,7 +1,7 @@
 package com.sysw.suite.core.infrastructure.api.controller;
 
-import com.sysw.suite.core.domain.exception.DomainException;
-import com.sysw.suite.core.domain.exception.NotFoundException;
+import com.sysw.suite.core.exception.DomainException;
+import com.sysw.suite.core.exception.NotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;

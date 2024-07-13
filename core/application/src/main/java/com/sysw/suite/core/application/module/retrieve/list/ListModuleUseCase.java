@@ -1,17 +1,18 @@
 package com.sysw.suite.core.application.module.retrieve.list;
 
 import com.sysw.suite.core.application.UseCase;
+import com.sysw.suite.core.application.module.retrieve.ModuleOutput;
 import com.sysw.suite.core.domain.exception.DomainException;
-import com.sysw.suite.core.domain.module.Module;
-import com.sysw.suite.core.domain.module.ModuleGateway;
-import com.sysw.suite.core.domain.module.ModuleID;
-import com.sysw.suite.core.domain.module.ModuleSearchQuery;
+import com.sysw.suite.core.domain.business.module.Module;
+import com.sysw.suite.core.domain.business.module.ModuleGateway;
+import com.sysw.suite.core.domain.business.module.ModuleID;
+import com.sysw.suite.core.domain.business.module.SearchQuery;
 import com.sysw.suite.core.domain.pagination.Pagination;
 
 import java.util.Objects;
 import java.util.function.Supplier;
 
-public class ListModuleUseCase extends UseCase<ModuleSearchQuery, Pagination<ModuleListOutput>> {
+public class ListModuleUseCase extends UseCase<SearchQuery, Pagination<ModuleOutput>> {
 
     private final ModuleGateway moduleGateway;
 
@@ -20,9 +21,9 @@ public class ListModuleUseCase extends UseCase<ModuleSearchQuery, Pagination<Mod
     }
 
     @Override
-    public Pagination<ModuleListOutput> execute(ModuleSearchQuery searchQuery) {
+    public Pagination<ModuleOutput> execute(SearchQuery searchQuery) {
         Pagination<Module> all = moduleGateway.findAll(searchQuery);
-        return all.map(module -> ModuleListOutput.from(module));
+        return all.map(module -> ModuleOutput.from(module));
     }
 
     private Supplier<? extends RuntimeException> notFound(ModuleID aModuleID) {

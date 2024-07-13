@@ -1,4 +1,4 @@
-package com.sysw.suite.core.domain.validation;
+package com.sysw.suite.core.validation;
 
 public abstract class Validator {
 

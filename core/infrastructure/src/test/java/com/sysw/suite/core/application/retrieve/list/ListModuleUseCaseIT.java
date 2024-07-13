@@ -2,11 +2,11 @@ package com.sysw.suite.core.application.retrieve.list;
 
 import com.sysw.suite.core.IntegrationTest;
 import com.sysw.suite.core.application.module.retrieve.list.ListModuleUseCase;
-import com.sysw.suite.core.domain.enums.Direction;
-import com.sysw.suite.core.domain.enums.Operator;
-import com.sysw.suite.core.domain.module.Module;
-import com.sysw.suite.core.domain.module.ModuleSearchQuery;
-import com.sysw.suite.core.infrastructure.module.persistence.ModuleJpaEntity;
+import com.sysw.suite.core.pagination.Direction;
+import com.sysw.suite.core.pagination.Operator;
+import com.sysw.suite.core.domain.business.module.Module;
+import com.sysw.suite.core.domain.business.module.SearchQuery;
+import com.sysw.suite.core.infrastructure.module.persistence.ModuleJPA;
 import com.sysw.suite.core.infrastructure.module.persistence.ModuleRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -18,8 +18,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.Arrays;
 import java.util.stream.Stream;
 
-import static com.sysw.suite.core.domain.enums.Direction.ASC;
-import static com.sysw.suite.core.domain.enums.Operator.*;
+import static com.sysw.suite.core.pagination.Direction.ASC;
+import static com.sysw.suite.core.pagination.Operator.*;
 
 @IntegrationTest
 public class ListModuleUseCaseIT {
@@ -44,7 +44,7 @@ public class ListModuleUseCaseIT {
                         Module.newModule("JOB101", "Module Job 101", null, false)
 
                 )
-                .map(ModuleJpaEntity::from)
+                .map(ModuleJPA::from)
                 .toList();
 
         moduleRepository.saveAll(categoryStream);
@@ -61,7 +61,7 @@ public class ListModuleUseCaseIT {
         final var expectedItemsCount = 0;
         final var expectedTotal = 0;
 
-        final var aQuery = ModuleSearchQuery.with(expectedPage,
+        final var aQuery = SearchQuery.with(expectedPage,
                 expectedPerPage, expectedSort, expectedDirection, "name", LIKE, expectedTerms);
 
         final var actualResult = useCase.execute(aQuery);
@@ -88,7 +88,7 @@ public class ListModuleUseCaseIT {
             String expectedName
     ) {
 
-        final var aQuery = ModuleSearchQuery.with(expectedPage,
+        final var aQuery = SearchQuery.with(expectedPage,
                 expectedPerPage, "name", ASC, "displayName", EQUAL, expectedTerms);
 
         final var actualResult = useCase.execute(aQuery);
@@ -120,7 +120,7 @@ public class ListModuleUseCaseIT {
     ) {
         final var expectedTerms = "";
 
-        final var aQuery = ModuleSearchQuery.with(expectedPage, expectedPerPage, expectedSort,
+        final var aQuery = SearchQuery.with(expectedPage, expectedPerPage, expectedSort,
                 Direction.valueOf(expectedDirection.toUpperCase()), "name", LIKE, expectedTerms);
 
         final var actualResult = useCase.execute(aQuery);
@@ -149,7 +149,7 @@ public class ListModuleUseCaseIT {
         final var expectedDirection = ASC;
         final var expectedTerms = "";
 
-        final var aQuery = ModuleSearchQuery.with(expectedPage, expectedPerPage, expectedSort,
+        final var aQuery = SearchQuery.with(expectedPage, expectedPerPage, expectedSort,
                 expectedDirection);
 
         final var actualResult = useCase.execute(aQuery);
@@ -202,7 +202,7 @@ public class ListModuleUseCaseIT {
         String[] expectedTerms2 = expectedTerms.trim().split(";")[1].trim().split(":");
         Object[] terms = {expectedTerms1, Arrays.stream(expectedTerms2).toList()};
 
-        var aQuery = ModuleSearchQuery.with(expectedPage, expectedPerPage, expectedSort, ASC, fields, operators, terms);
+        var aQuery = SearchQuery.with(expectedPage, expectedPerPage, expectedSort, ASC, fields, operators, terms);
 
         final var actualResult = useCase.execute(aQuery);
 
@@ -239,7 +239,7 @@ public class ListModuleUseCaseIT {
         Operator operators = Operator.valueOf(expectedOperator.trim());
         Object terms = expectedTerms.trim();
 
-        var aQuery = ModuleSearchQuery.with(expectedPage, expectedPerPage, expectedSort, ASC, fields, operators, terms);
+        var aQuery = SearchQuery.with(expectedPage, expectedPerPage, expectedSort, ASC, fields, operators, terms);
 
         final var actualResult = useCase.execute(aQuery);
 
@@ -276,7 +276,7 @@ public class ListModuleUseCaseIT {
         Operator operators = Operator.valueOf(expectedOperator.trim());
         Object terms = expectedTerms;
 
-        var aQuery = ModuleSearchQuery.with(expectedPage, expectedPerPage, expectedSort, ASC, fields, operators, terms);
+        var aQuery = SearchQuery.with(expectedPage, expectedPerPage, expectedSort, ASC, fields, operators, terms);
 
         final var actualResult = useCase.execute(aQuery);
 
@@ -312,7 +312,7 @@ public class ListModuleUseCaseIT {
         Operator operators = Operator.valueOf(expectedOperator.trim());
         Object terms = expectedTerms;
 
-        var aQuery = ModuleSearchQuery.with(expectedPage, expectedPerPage, expectedSort, ASC, fields, operators, terms);
+        var aQuery = SearchQuery.with(expectedPage, expectedPerPage, expectedSort, ASC, fields, operators, terms);
 
         final var actualResult = useCase.execute(aQuery);
 

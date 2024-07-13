@@ -1,13 +1,13 @@
 package com.sysw.suite.core.application.retrieve.get;
 
 import com.sysw.suite.core.IntegrationTest;
-import com.sysw.suite.core.application.module.retrieve.get.GetModuleUseCase;
-import com.sysw.suite.core.application.module.retrieve.get.ModuleGetOutput;
-import com.sysw.suite.core.domain.exception.DomainException;
-import com.sysw.suite.core.domain.module.Module;
-import com.sysw.suite.core.domain.module.ModuleGateway;
-import com.sysw.suite.core.domain.module.ModuleID;
-import com.sysw.suite.core.infrastructure.module.persistence.ModuleJpaEntity;
+import com.sysw.suite.core.application.module.retrieve.get.GetModuleByIDUseCase;
+import com.sysw.suite.core.application.module.retrieve.ModuleOutput;
+import com.sysw.suite.core.exception.DomainException;
+import com.sysw.suite.core.domain.business.module.Module;
+import com.sysw.suite.core.domain.business.module.ModuleGateway;
+import com.sysw.suite.core.domain.business.module.ModuleID;
+import com.sysw.suite.core.infrastructure.module.persistence.ModuleJPA;
 import com.sysw.suite.core.infrastructure.module.persistence.ModuleRepository;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -20,13 +20,13 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @IntegrationTest
-public class GetModuleUseCaseIT {
+public class GetModuleByIDUseCaseIT {
 
     @SpyBean
     private ModuleGateway moduleGateway;
 
     @Autowired
-    private GetModuleUseCase useCase;
+    private GetModuleByIDUseCase useCase;
 
     @Autowired
     private ModuleRepository moduleRepository;
@@ -40,7 +40,7 @@ public class GetModuleUseCaseIT {
         assertEquals(1, moduleRepository.count());
 
         // When
-        ModuleGetOutput output = useCase.execute(id);
+        ModuleOutput output = useCase.execute(id);
 
         // Then
         assertNotNull(output);
@@ -62,7 +62,7 @@ public class GetModuleUseCaseIT {
         assertEquals(1, moduleRepository.count());
 
         //When
-        ModuleGetOutput result = useCase.execute("1");
+        ModuleOutput result = useCase.execute("1");
 
         //Then
         assertEquals(moduleId, result.id());
@@ -87,7 +87,7 @@ public class GetModuleUseCaseIT {
     private void save(Module... aCategory) {
 
         var categoryJpaEntities = Arrays.stream(aCategory)
-                .map(ModuleJpaEntity::from)
+                .map(ModuleJPA::from)
                 .toList();
 
         moduleRepository.saveAll(categoryJpaEntities);

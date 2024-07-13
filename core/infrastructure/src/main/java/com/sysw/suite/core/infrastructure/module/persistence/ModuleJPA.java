@@ -1,8 +1,8 @@
 package com.sysw.suite.core.infrastructure.module.persistence;
 
 
-import com.sysw.suite.core.domain.module.Module;
-import com.sysw.suite.core.domain.module.ModuleID;
+import com.sysw.suite.core.domain.business.module.Module;
+import com.sysw.suite.core.domain.business.module.ModuleID;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -13,7 +13,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "modules")
-public class ModuleJpaEntity {
+public class ModuleJPA {
     @Id
     private String id;
 
@@ -35,10 +35,10 @@ public class ModuleJpaEntity {
     @Column(name = "updated_at", nullable = false, columnDefinition = "DATETIME(6)")
     private Instant updatedAt;
 
-    public ModuleJpaEntity() {
+    public ModuleJPA() {
     }
 
-    private ModuleJpaEntity(
+    private ModuleJPA(
             final String id,
             final String name,
             final String displayName,
@@ -56,8 +56,8 @@ public class ModuleJpaEntity {
         this.updatedAt = updatedAt;
     }
 
-    public static ModuleJpaEntity from(final Module aModule) {
-        return new ModuleJpaEntity(
+    public static ModuleJPA from(final Module aModule) {
+        return new ModuleJPA(
                 aModule.getId().getValue(),
                 aModule.getName(),
                 aModule.getDisplayName(),
@@ -141,7 +141,7 @@ public class ModuleJpaEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        ModuleJpaEntity that = (ModuleJpaEntity) o;
+        ModuleJPA that = (ModuleJPA) o;
 
         return Objects.equals(id, that.id);
     }

@@ -1,7 +1,8 @@
 package com.sysw.suite.core.domain.module;
 
-import com.sysw.suite.core.domain.exception.DomainException;
-import com.sysw.suite.core.domain.validation.handler.ThrowsValidationHandler;
+import com.sysw.suite.core.domain.business.module.Module;
+import com.sysw.suite.core.exception.DomainException;
+import com.sysw.suite.core.validation.handler.ThrowsValidationHandler;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

@@ -1,7 +1,7 @@
 package com.sysw.suite.core.infrastructure.module.persistence;
 
 
-import com.sysw.suite.core.domain.module.Module;
+import com.sysw.suite.core.domain.business.module.Module;
 import com.sysw.suite.core.MySQLGatewayTest;
 import org.hibernate.PropertyValueException;
 import org.hibernate.id.IdentifierGenerationException;
@@ -26,7 +26,7 @@ public class ModuleRepositoryTest {
         final var property = "name";
 
         final var module = Module.newModule("Name 1", "Display Name 1", "License 1", true);
-        final var entity = ModuleJpaEntity.from(module);
+        final var entity = ModuleJPA.from(module);
         entity.setName(null);
 
         final var exception = assertThrows(DataIntegrityViolationException.class, () -> moduleRepository.save(entity));
@@ -43,7 +43,7 @@ public class ModuleRepositoryTest {
         final var property = "createdAt";
 
         final var module = Module.newModule("Name 1", "Display Name 1", "License 1", true);
-        final var entity = ModuleJpaEntity.from(module);
+        final var entity = ModuleJPA.from(module);
         entity.setCreatedAt(null);
 
         final var exception = assertThrows(DataIntegrityViolationException.class, () -> moduleRepository.save(entity));
@@ -60,7 +60,7 @@ public class ModuleRepositoryTest {
         final var property = "updatedAt";
 
         final var module = Module.newModule("Name 1", "Display Name 1", "License 1", true);
-        final var entity = ModuleJpaEntity.from(module);
+        final var entity = ModuleJPA.from(module);
         entity.setUpdatedAt(null);
 
         final var exception = assertThrows(DataIntegrityViolationException.class, () -> moduleRepository.save(entity));
@@ -78,7 +78,7 @@ public class ModuleRepositoryTest {
 //        final var property = "id";
 
         final var module = Module.newModule("Name 1", "Display Name 1", "License 1", true);
-        final var entity = ModuleJpaEntity.from(module);
+        final var entity = ModuleJPA.from(module);
         entity.setId(null);
 
         final var exception = assertThrows(JpaSystemException.class, () -> moduleRepository.save(entity));

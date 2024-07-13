@@ -1,7 +1,6 @@
 package com.sysw.suite.core.application.module.create;
 
-import com.sysw.suite.core.domain.module.Module;
-import com.sysw.suite.core.domain.module.ModuleID;
+import com.sysw.suite.core.domain.business.module.Module;
 
 public record CreateModuleOutput(String id) {
     public static CreateModuleOutput from(final Module anApplication){

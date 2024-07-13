@@ -1,9 +1,9 @@
-package com.sysw.suite.core.domain.module;
+package com.sysw.suite.core.domain.business.module;
 
-import com.sysw.suite.core.domain.enums.Direction;
-import com.sysw.suite.core.domain.enums.Operator;
+import com.sysw.suite.core.pagination.Direction;
+import com.sysw.suite.core.pagination.Operator;
 
-public record ModuleSearchQuery(
+public record SearchQuery(
         int page,
         int perPage,
         String sortBy,
@@ -13,16 +13,16 @@ public record ModuleSearchQuery(
         Object[] terms
 ) {
 
-    public static ModuleSearchQuery with(
+    public static SearchQuery with(
             int page,
             int perPage,
             String sortBy,
             Direction direction
     ) {
-        return new ModuleSearchQuery(page, perPage, sortBy, direction, null, null, null);
+        return new SearchQuery(page, perPage, sortBy, direction, null, null, null);
     }
 
-    public static ModuleSearchQuery with(
+    public static SearchQuery with(
             int page,
             int perPage,
             String sortBy,
@@ -31,11 +31,11 @@ public record ModuleSearchQuery(
             Operator operator,
             Object term
     ) {
-        return new ModuleSearchQuery(page, perPage, sortBy, direction, new String[]{field},
+        return new SearchQuery(page, perPage, sortBy, direction, new String[]{field},
                 new Operator[]{operator}, new Object[]{term});
     }
 
-    public static ModuleSearchQuery with(
+    public static SearchQuery with(
             int page,
             int perPage,
             String sort,
@@ -44,6 +44,6 @@ public record ModuleSearchQuery(
             Operator[] operators,
             Object[] terms
     ) {
-        return new ModuleSearchQuery(page, perPage, sort, direction, fields, operators, terms);
+        return new SearchQuery(page, perPage, sort, direction, fields, operators, terms);
     }
 }

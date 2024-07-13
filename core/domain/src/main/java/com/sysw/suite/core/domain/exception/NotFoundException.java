@@ -1,7 +1,7 @@
-package com.sysw.suite.core.domain.exception;
+package com.sysw.suite.core.exception;
 
-import com.sysw.suite.core.domain.AggregateRoot;
-import com.sysw.suite.core.domain.Identifier;
+import com.sysw.suite.core.AggregateRoot;
+import com.sysw.suite.core.Identifier;
 
 import java.util.Collections;
 import java.util.List;

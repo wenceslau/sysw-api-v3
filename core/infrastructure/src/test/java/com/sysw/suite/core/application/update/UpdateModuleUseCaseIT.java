@@ -4,11 +4,11 @@ import com.sysw.suite.core.IntegrationTest;
 import com.sysw.suite.core.application.module.update.UpdateModuleInput;
 import com.sysw.suite.core.application.module.update.UpdateModuleOutput;
 import com.sysw.suite.core.application.module.update.UpdateModuleUseCase;
-import com.sysw.suite.core.domain.exception.DomainException;
-import com.sysw.suite.core.domain.module.Module;
-import com.sysw.suite.core.domain.module.ModuleGateway;
-import com.sysw.suite.core.domain.module.ModuleID;
-import com.sysw.suite.core.infrastructure.module.persistence.ModuleJpaEntity;
+import com.sysw.suite.core.exception.DomainException;
+import com.sysw.suite.core.domain.business.module.Module;
+import com.sysw.suite.core.domain.business.module.ModuleGateway;
+import com.sysw.suite.core.domain.business.module.ModuleID;
+import com.sysw.suite.core.infrastructure.module.persistence.ModuleJPA;
 import com.sysw.suite.core.infrastructure.module.persistence.ModuleRepository;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -79,7 +79,7 @@ public class UpdateModuleUseCaseIT {
     private void save(Module... aCategory) {
 
         var categoryJpaEntities = Arrays.stream(aCategory)
-                .map(ModuleJpaEntity::from)
+                .map(ModuleJPA::from)
                 .toList();
 
         moduleRepository.saveAll(categoryJpaEntities);

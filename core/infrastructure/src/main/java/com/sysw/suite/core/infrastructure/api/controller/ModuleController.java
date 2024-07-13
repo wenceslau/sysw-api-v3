@@ -3,18 +3,18 @@ package com.sysw.suite.core.infrastructure.api.controller;
 import com.sysw.suite.core.application.module.create.CreateModuleInput;
 import com.sysw.suite.core.application.module.create.CreateModuleOutput;
 import com.sysw.suite.core.application.module.create.CreateModuleUseCase;
-import com.sysw.suite.core.application.module.retrieve.get.GetModuleUseCase;
-import com.sysw.suite.core.application.module.retrieve.get.ModuleGetOutput;
+import com.sysw.suite.core.application.module.retrieve.get.GetModuleByIDUseCase;
+import com.sysw.suite.core.application.module.retrieve.ModuleOutput;
 import com.sysw.suite.core.application.module.retrieve.list.ListModuleUseCase;
 import com.sysw.suite.core.application.module.update.UpdateModuleInput;
 import com.sysw.suite.core.application.module.update.UpdateModuleOutput;
 import com.sysw.suite.core.application.module.update.UpdateModuleUseCase;
-import com.sysw.suite.core.domain.enums.Direction;
-import com.sysw.suite.core.domain.module.ModuleSearchQuery;
-import com.sysw.suite.core.domain.pagination.Pagination;
+import com.sysw.suite.core.pagination.Direction;
+import com.sysw.suite.core.domain.business.module.SearchQuery;
+import com.sysw.suite.core.pagination.Pagination;
 import com.sysw.suite.core.infrastructure.api.ModuleAPI;
 import com.sysw.suite.core.infrastructure.module.models.CreateModuleRequest;
-import com.sysw.suite.core.infrastructure.module.models.ModuleGetResponse;
+import com.sysw.suite.core.infrastructure.module.models.ModuleResponse;
 import com.sysw.suite.core.infrastructure.module.models.UpdateModuleRequest;
 import com.sysw.suite.core.infrastructure.module.presenters.ModuleApiPresenters;
 import org.springframework.http.ResponseEntity;
@@ -27,15 +27,15 @@ public class ModuleController implements ModuleAPI {
 
     private final CreateModuleUseCase createModuleUseCase;
 
-    private final GetModuleUseCase getModuleUseCase;
+    private final GetModuleByIDUseCase getModuleByIDUseCase;
 
     private final UpdateModuleUseCase updateModuleUseCase;
 
     private final ListModuleUseCase listModuleUseCase;
 
-    public ModuleController(CreateModuleUseCase createModuleUseCase, GetModuleUseCase getModuleUseCase, UpdateModuleUseCase updateModuleUseCase, ListModuleUseCase listModuleUseCase) {
+    public ModuleController(CreateModuleUseCase createModuleUseCase, GetModuleByIDUseCase getModuleByIDUseCase, UpdateModuleUseCase updateModuleUseCase, ListModuleUseCase listModuleUseCase) {
         this.createModuleUseCase = createModuleUseCase;
-        this.getModuleUseCase = getModuleUseCase;
+        this.getModuleByIDUseCase = getModuleByIDUseCase;
         this.updateModuleUseCase = updateModuleUseCase;
         this.listModuleUseCase = listModuleUseCase;
     }
@@ -60,10 +60,10 @@ public class ModuleController implements ModuleAPI {
     }
 
     @Override
-    public Pagination<?> listCategories(String search, Integer page, Integer perPage,
-                                        String sort, String direction) {
+    public Pagination<ModuleResponse> listCategories(String search, Integer page, Integer perPage,
+                                                     String sort, String direction) {
 
-        ModuleSearchQuery query = ModuleSearchQuery.with(page, perPage, sort,Direction.from(direction));
+        SearchQuery query = SearchQuery.with(page, perPage, sort,Direction.from(direction));
 
         return listModuleUseCase.execute(query)
                 .map(ModuleApiPresenters::present);
@@ -72,8 +72,8 @@ public class ModuleController implements ModuleAPI {
 
 
     @Override
-    public ModuleGetResponse getModule(String id) {
-        ModuleGetOutput execute = getModuleUseCase.execute(id);
+    public ModuleResponse getModule(String id) {
+        ModuleOutput execute = getModuleByIDUseCase.execute(id);
         return ModuleApiPresenters.present(execute);
     }
 

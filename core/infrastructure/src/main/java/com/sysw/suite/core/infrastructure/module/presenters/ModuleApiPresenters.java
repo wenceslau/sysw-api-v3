@@ -1,26 +1,12 @@
 package com.sysw.suite.core.infrastructure.module.presenters;
 
-import com.sysw.suite.core.application.module.retrieve.get.ModuleGetOutput;
-import com.sysw.suite.core.application.module.retrieve.list.ModuleListOutput;
-import com.sysw.suite.core.infrastructure.module.models.ModuleGetResponse;
-import com.sysw.suite.core.infrastructure.module.models.ModuleListResponse;
+import com.sysw.suite.core.application.module.retrieve.ModuleOutput;
+import com.sysw.suite.core.infrastructure.module.models.ModuleResponse;
 
 public interface ModuleApiPresenters {
 
-    static ModuleGetResponse present(final ModuleGetOutput moduleGetOutput){
-        return new ModuleGetResponse(
-                moduleGetOutput.id().getValue(),
-                moduleGetOutput.name(),
-                moduleGetOutput.displayName(),
-                moduleGetOutput.license(),
-                moduleGetOutput.active(),
-                moduleGetOutput.createdAt(),
-                moduleGetOutput.updateAt()
-        );
-    }
-
-    static ModuleListResponse present(final ModuleListOutput moduleOutput){
-        return new ModuleListResponse(
+    static ModuleResponse present(final ModuleOutput moduleOutput){
+        return new ModuleResponse(
                 moduleOutput.id().getValue(),
                 moduleOutput.name(),
                 moduleOutput.displayName(),

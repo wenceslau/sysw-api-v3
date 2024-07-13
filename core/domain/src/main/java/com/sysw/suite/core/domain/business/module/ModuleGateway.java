@@ -1,8 +1,8 @@
-package com.sysw.suite.core.domain.module;
+package com.sysw.suite.core.domain.business.module;
 
 
 
-import com.sysw.suite.core.domain.pagination.Pagination;
+import com.sysw.suite.core.pagination.Pagination;
 
 import java.util.Optional;
 
@@ -16,6 +16,6 @@ public interface ModuleGateway {
 
     Module update(Module aCategory);
 
-    Pagination<Module> findAll(ModuleSearchQuery aQuery);
+    Pagination<Module> findAll(SearchQuery aQuery);
 
 }

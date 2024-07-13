@@ -1,7 +1,7 @@
-package com.sysw.suite.core.domain.validation.handler;
+package com.sysw.suite.core.validation.handler;
 
-import com.sysw.suite.core.domain.exception.DomainException;
-import com.sysw.suite.core.domain.validation.ValidationHandler;
+import com.sysw.suite.core.exception.DomainException;
+import com.sysw.suite.core.validation.ValidationHandler;
 
 import java.util.List;
 

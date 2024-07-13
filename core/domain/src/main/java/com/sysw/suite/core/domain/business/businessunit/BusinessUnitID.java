@@ -1,29 +1,29 @@
-package com.sysw.suite.core.domain.module;
+package com.sysw.suite.core.domain.business.businessunit;
 
-import com.sysw.suite.core.domain.Identifier;
+import com.sysw.suite.core.Identifier;
 
 import java.util.Objects;
 import java.util.UUID;
 
-public class ModuleID extends Identifier {
+public class BusinessUnitID extends Identifier {
 
     private final String value;
 
-    public ModuleID(final String value) {
+    public BusinessUnitID(final String value) {
         Objects.requireNonNull(value);
         this.value = value;
     }
 
-    public static ModuleID unique(){
-        return ModuleID.from(UUID.randomUUID());
+    public static BusinessUnitID unique(){
+        return BusinessUnitID.from(UUID.randomUUID());
     }
 
-    public static ModuleID from(final String anId){
-        return new ModuleID(anId);
+    public static BusinessUnitID from(final String anId){
+        return new BusinessUnitID(anId);
     }
 
-    public static ModuleID from(final UUID anId){
-        return new ModuleID(anId.toString().toLowerCase());
+    public static BusinessUnitID from(final UUID anId){
+        return new BusinessUnitID(anId.toString().toLowerCase());
     }
 
     @Override
@@ -35,7 +35,7 @@ public class ModuleID extends Identifier {
     public boolean equals(Object object) {
         if (this == object) return true;
         if (object == null || getClass() != object.getClass()) return false;
-        ModuleID that = (ModuleID) object;
+        BusinessUnitID that = (BusinessUnitID) object;
         return getValue().equals(that.getValue());
     }
 

@@ -1,9 +1,9 @@
 package com.sysw.suite.core.application.module.retrieve.list;
 
-import com.sysw.suite.core.domain.module.Module;
-import com.sysw.suite.core.domain.module.ModuleGateway;
-import com.sysw.suite.core.domain.module.ModuleID;
-import com.sysw.suite.core.domain.module.ModuleSearchQuery;
+import com.sysw.suite.core.domain.business.module.Module;
+import com.sysw.suite.core.domain.business.module.ModuleGateway;
+import com.sysw.suite.core.domain.business.module.ModuleID;
+import com.sysw.suite.core.domain.business.module.SearchQuery;
 import com.sysw.suite.core.domain.pagination.Pagination;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,7 +17,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.Collections;
 import java.util.List;
 
-import static com.sysw.suite.core.domain.enums.Direction.ASC;
+import static com.sysw.suite.core.domain.pagination.Direction.ASC;
 
 @ExtendWith(MockitoExtension.class)
 public class ListModuleUseCaseTest {
@@ -42,18 +42,18 @@ public class ListModuleUseCaseTest {
         final var expectedSort = "createdAt";
         final var expectedDirection = ASC;
 
-        var searchQuery = ModuleSearchQuery.with(expectedPage, expectedPerPage, expectedSort, expectedDirection);
+        var searchQuery = SearchQuery.with(expectedPage, expectedPerPage, expectedSort, expectedDirection);
 
         List<Module> moduleList = List.of(
                 Module.newModule(ModuleID.from("123"), "-", "-", "-", true),
                 Module.newModule(ModuleID.from("321"), "-", "-", "-", true)
         );
         final var expectedPagination = new Pagination<>(expectedPage, expectedPerPage, moduleList.size(), moduleList);
-        final var expectedResult = expectedPagination.map(ModuleListOutput::from);
+        final var expectedResult = expectedPagination.map(ModuleOutput::from);
 
         //when
         Mockito.when(moduleGateway.findAll(searchQuery)).thenReturn(expectedPagination);
-        Pagination<ModuleListOutput> result = useCase.execute(searchQuery);
+        Pagination<ModuleOutput> result = useCase.execute(searchQuery);
 
         //Then
         Assertions.assertEquals(expectedResult, result);
@@ -61,7 +61,7 @@ public class ListModuleUseCaseTest {
         Assertions.assertEquals(expectedPerPage, result.perPage());
         Assertions.assertEquals(moduleList.size(), result.total());
         Assertions.assertEquals(moduleList.size(), result.items().size());
-        Assertions.assertTrue(result.items().stream().allMatch(ModuleListOutput.class::isInstance));
+        Assertions.assertTrue(result.items().stream().allMatch(ModuleOutput.class::isInstance));
 
     }
 
@@ -74,7 +74,7 @@ public class ListModuleUseCaseTest {
         final var expectedSort = "createdAt";
         final var expectedDirection = ASC;
 
-        var searchQuery = ModuleSearchQuery.with(expectedPage, expectedPerPage, expectedSort, expectedDirection);
+        var searchQuery = SearchQuery.with(expectedPage, expectedPerPage, expectedSort, expectedDirection);
 
         List<Module> moduleList = List.of();
 
@@ -82,13 +82,13 @@ public class ListModuleUseCaseTest {
         Mockito.when(moduleGateway.findAll(searchQuery))
                 .thenReturn(new Pagination<>(expectedPage, expectedPerPage, moduleList.size(), moduleList));
 
-        Pagination<ModuleListOutput> result = useCase.execute(searchQuery);
+        Pagination<ModuleOutput> result = useCase.execute(searchQuery);
 
         Assertions.assertEquals(expectedPage, result.currentPage());
         Assertions.assertEquals(expectedPerPage, result.perPage());
         Assertions.assertEquals(moduleList.size(), result.total());
         Assertions.assertEquals(moduleList.size(), result.items().size());
-        Assertions.assertTrue(result.items().stream().allMatch(ModuleListOutput.class::isInstance));
+        Assertions.assertTrue(result.items().stream().allMatch(ModuleOutput.class::isInstance));
 
     }
 
@@ -103,18 +103,18 @@ public class ListModuleUseCaseTest {
         List<Module> moduleList = Collections.singletonList(module);
         Pagination<Module> modules = new Pagination<>(0, 1, 1, moduleList);
 
-        Mockito.when(moduleGateway.findAll((ModuleSearchQuery) Mockito.any())).thenReturn(modules);
+        Mockito.when(moduleGateway.findAll((SearchQuery) Mockito.any())).thenReturn(modules);
 
         // Initialize UseCase
         ListModuleUseCase useCase = new ListModuleUseCase(moduleGateway);
 
         // Execute
-        var searchQuery = ModuleSearchQuery.with(0, 0, "", ASC);
-        Pagination<ModuleListOutput> result = useCase.execute(searchQuery);
+        var searchQuery = SearchQuery.with(0, 0, "", ASC);
+        Pagination<ModuleOutput> result = useCase.execute(searchQuery);
 
         // Assert and Verify
-        Mockito.verify(moduleGateway, Mockito.times(1)).findAll((ModuleSearchQuery) Mockito.any());
+        Mockito.verify(moduleGateway, Mockito.times(1)).findAll((SearchQuery) Mockito.any());
         Assertions.assertEquals(modules.total(), result.total());
-        Assertions.assertTrue(result.items().stream().allMatch(ModuleListOutput.class::isInstance));
+        Assertions.assertTrue(result.items().stream().allMatch(ModuleOutput.class::isInstance));
     }
 }

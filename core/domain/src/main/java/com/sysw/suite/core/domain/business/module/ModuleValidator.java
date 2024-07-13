@@ -1,7 +1,7 @@
-package com.sysw.suite.core.domain.module;
+package com.sysw.suite.core.domain.business.module;
 
-import com.sysw.suite.core.domain.validation.ValidationHandler;
-import com.sysw.suite.core.domain.validation.Validator;
+import com.sysw.suite.core.validation.ValidationHandler;
+import com.sysw.suite.core.validation.Validator;
 
 public class ModuleValidator extends Validator {
 

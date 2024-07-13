@@ -1,8 +1,8 @@
 package com.sysw.suite.core.infrastructure.api;
 
-import com.sysw.suite.core.domain.pagination.Pagination;
+import com.sysw.suite.core.pagination.Pagination;
 import com.sysw.suite.core.infrastructure.module.models.CreateModuleRequest;
-import com.sysw.suite.core.infrastructure.module.models.ModuleGetResponse;
+import com.sysw.suite.core.infrastructure.module.models.ModuleResponse;
 import com.sysw.suite.core.infrastructure.module.models.UpdateModuleRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -36,7 +36,7 @@ public interface ModuleAPI {
             @ApiResponse(responseCode = "422", description = "Invalid request"),
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
-    Pagination<?> listCategories(
+    Pagination<ModuleResponse> listCategories(
             @RequestParam(name = "search", required = false, defaultValue = "") String search,
             @RequestParam(name = "page", required = false, defaultValue = "0") Integer page,
             @RequestParam(name = "perPage", required = false, defaultValue = "10") Integer perPage,
@@ -55,7 +55,7 @@ public interface ModuleAPI {
             @ApiResponse(responseCode = "422", description = "Invalid request"),
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
-    ModuleGetResponse getModule(@PathVariable("id") String id);
+    ModuleResponse getModule(@PathVariable("id") String id);
 
     @PutMapping( value = "/{id}",
             produces = MediaType.APPLICATION_JSON_VALUE,

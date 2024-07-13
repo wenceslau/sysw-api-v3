@@ -1,4 +1,4 @@
-package com.sysw.suite.core.domain.pagination;
+package com.sysw.suite.core.pagination;
 
 import java.util.List;
 import java.util.function.Function;

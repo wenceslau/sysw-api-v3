@@ -1,4 +1,4 @@
-package com.sysw.suite.core.domain.exception;
+package com.sysw.suite.core.exception;
 
 import java.util.List;
 

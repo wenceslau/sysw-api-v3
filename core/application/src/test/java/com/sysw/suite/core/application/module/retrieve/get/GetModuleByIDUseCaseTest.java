@@ -1,9 +1,10 @@
 package com.sysw.suite.core.application.module.retrieve.get;
 
+import com.sysw.suite.core.application.module.retrieve.ModuleOutput;
 import com.sysw.suite.core.domain.exception.NotFoundException;
-import com.sysw.suite.core.domain.module.Module;
-import com.sysw.suite.core.domain.module.ModuleGateway;
-import com.sysw.suite.core.domain.module.ModuleID;
+import com.sysw.suite.core.domain.business.module.Module;
+import com.sysw.suite.core.domain.business.module.ModuleGateway;
+import com.sysw.suite.core.domain.business.module.ModuleID;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -18,12 +19,12 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-public class GetModuleUseCaseTest {
+public class GetModuleByIDUseCaseTest {
     @Mock
     private ModuleGateway moduleGateway;
 
     @InjectMocks
-    private GetModuleUseCase useCase;
+    private GetModuleByIDUseCase useCase;
 
     @BeforeEach
     void cleanUp(){
@@ -38,7 +39,7 @@ public class GetModuleUseCaseTest {
 
         // When
         when(moduleGateway.findById(ModuleID.from(id))).thenReturn(Optional.of(expectedModule));
-        ModuleGetOutput output = useCase.execute(id);
+        ModuleOutput output = useCase.execute(id);
 
         // Then
         assertNotNull(output);
@@ -60,7 +61,7 @@ public class GetModuleUseCaseTest {
         when(moduleGateway.findById(moduleId)).thenReturn(Optional.of(module));
 
         //When
-        ModuleGetOutput result = useCase.execute("1");
+        ModuleOutput result = useCase.execute("1");
 
         //Then
         assertEquals(moduleId, result.id());

@@ -1,6 +1,6 @@
 package com.sysw.suite.core.domain;
 
-import com.sysw.suite.core.domain.validation.ValidationHandler;
+import com.sysw.suite.core.validation.ValidationHandler;
 
 import java.util.Objects;
 

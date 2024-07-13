@@ -1,7 +1,7 @@
-package com.sysw.suite.core.domain.module;
+package com.sysw.suite.core.domain.business.module;
 
-import com.sysw.suite.core.domain.AggregateRoot;
-import com.sysw.suite.core.domain.validation.ValidationHandler;
+import com.sysw.suite.core.AggregateRoot;
+import com.sysw.suite.core.validation.ValidationHandler;
 
 import java.time.Instant;
 import java.util.Objects;

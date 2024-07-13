@@ -4,17 +4,16 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sysw.suite.core.ControllerTest;
 import com.sysw.suite.core.application.module.create.CreateModuleOutput;
 import com.sysw.suite.core.application.module.create.CreateModuleUseCase;
-import com.sysw.suite.core.application.module.retrieve.get.GetModuleUseCase;
-import com.sysw.suite.core.application.module.retrieve.get.ModuleGetOutput;
+import com.sysw.suite.core.application.module.retrieve.get.GetModuleByIDUseCase;
 import com.sysw.suite.core.application.module.retrieve.list.ListModuleUseCase;
-import com.sysw.suite.core.application.module.retrieve.list.ModuleListOutput;
+import com.sysw.suite.core.application.module.retrieve.list.ModuleOutput;
 import com.sysw.suite.core.application.module.update.UpdateModuleOutput;
 import com.sysw.suite.core.application.module.update.UpdateModuleUseCase;
-import com.sysw.suite.core.domain.exception.DomainException;
-import com.sysw.suite.core.domain.exception.NotFoundException;
-import com.sysw.suite.core.domain.module.Module;
-import com.sysw.suite.core.domain.module.ModuleID;
-import com.sysw.suite.core.domain.pagination.Pagination;
+import com.sysw.suite.core.exception.DomainException;
+import com.sysw.suite.core.exception.NotFoundException;
+import com.sysw.suite.core.domain.business.module.Module;
+import com.sysw.suite.core.domain.business.module.ModuleID;
+import com.sysw.suite.core.pagination.Pagination;
 import com.sysw.suite.core.infrastructure.module.models.CreateModuleRequest;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Assertions;
@@ -28,7 +27,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.util.List;
 
-import static com.sysw.suite.core.domain.enums.Direction.ASC;
+import static com.sysw.suite.core.pagination.Direction.ASC;
 import static org.hamcrest.Matchers.equalTo;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.argThat;
@@ -50,7 +49,7 @@ public class ControllerAPITest {
     private CreateModuleUseCase createModuleUseCase;
 
     @MockBean
-    private GetModuleUseCase getModuleUseCase;
+    private GetModuleByIDUseCase getModuleByIDUseCase;
 
     @MockBean
     private UpdateModuleUseCase updateModuleUseCase;
@@ -65,7 +64,7 @@ public class ControllerAPITest {
     }
 
     @Test
-    public void givenAValidInput_whenCallsCreateModule_shouldReturnModuleId() throws Exception {
+    public void givenAValidInput_whenCallsCreateModule_shouldReturnModuleId() throws Exception  {
         //given
         var expectedName = "name";
         var expectedDisplayName = "display name";
@@ -159,8 +158,8 @@ public class ControllerAPITest {
         );
 
         //when
-        when(getModuleUseCase.execute(any()))
-                .thenReturn(ModuleGetOutput.from(module));
+        when(getModuleByIDUseCase.execute(any()))
+                .thenReturn(com.sysw.suite.core.application.module.retrieve.ModuleOutput.from(module));
 
         var request = MockMvcRequestBuilders.get("/modules/{id}", expectedId)
                 .accept(MediaType.APPLICATION_JSON)
@@ -188,7 +187,7 @@ public class ControllerAPITest {
         var expectedErrorMessage = "The Module with id 123 was not found";
 
         //when
-        when(getModuleUseCase.execute(any()))
+        when(getModuleByIDUseCase.execute(any()))
                 .thenThrow(NotFoundException.with(Module.class, ModuleID.from(expectedId)));
 
         var request = MockMvcRequestBuilders.get("/modules/{id}", expectedId)
@@ -290,7 +289,7 @@ public class ControllerAPITest {
         final var expectedDirection = "asc";
         final var expectedItemsCount = 1;
         final var expectedTotal = 1;
-        final var expectedItems = List.of(ModuleListOutput.from(module));
+        final var expectedItems = List.of(ModuleOutput.from(module));
         var pagination = new Pagination<>(expectedPage, expectedPerPage, expectedTotal, expectedItems);
 
         //when

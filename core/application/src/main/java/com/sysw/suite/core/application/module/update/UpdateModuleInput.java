@@ -1,7 +1,5 @@
 package com.sysw.suite.core.application.module.update;
 
-import com.sysw.suite.core.domain.module.ModuleID;
-
 public record UpdateModuleInput(String id,
                                 String name,
                                 String displayName,

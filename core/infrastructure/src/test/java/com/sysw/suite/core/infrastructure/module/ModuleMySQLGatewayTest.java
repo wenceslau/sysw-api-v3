@@ -1,11 +1,11 @@
 package com.sysw.suite.core.infrastructure.module;
 
-import com.sysw.suite.core.domain.enums.Operator;
-import com.sysw.suite.core.domain.module.Module;
-import com.sysw.suite.core.domain.module.ModuleID;
-import com.sysw.suite.core.domain.module.ModuleSearchQuery;
+import com.sysw.suite.core.pagination.Operator;
+import com.sysw.suite.core.domain.business.module.Module;
+import com.sysw.suite.core.domain.business.module.ModuleID;
+import com.sysw.suite.core.domain.business.module.SearchQuery;
 import com.sysw.suite.core.MySQLGatewayTest;
-import com.sysw.suite.core.infrastructure.module.persistence.ModuleJpaEntity;
+import com.sysw.suite.core.infrastructure.module.persistence.ModuleJPA;
 import com.sysw.suite.core.infrastructure.module.persistence.ModuleRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -14,8 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static com.sysw.suite.core.domain.enums.Direction.ASC;
-import static com.sysw.suite.core.domain.enums.Operator.LIKE;
+import static com.sysw.suite.core.pagination.Direction.ASC;
+import static com.sysw.suite.core.pagination.Operator.LIKE;
 import static org.junit.jupiter.api.Assertions.*;
 
 @MySQLGatewayTest
@@ -71,7 +71,7 @@ class ModuleMySQLGatewayTest {
 
         //When
         Assertions.assertEquals(0, moduleRepository.count());
-        var createdModuleEntity = moduleRepository.save(ModuleJpaEntity.from(module));
+        var createdModuleEntity = moduleRepository.save(ModuleJPA.from(module));
         Assertions.assertEquals(1, moduleRepository.count());
 
         //Then
@@ -138,7 +138,7 @@ class ModuleMySQLGatewayTest {
 
         //When/then
         Assertions.assertEquals(0, moduleRepository.count());
-        var createdModuleEntity = moduleRepository.save(ModuleJpaEntity.from(module));
+        var createdModuleEntity = moduleRepository.save(ModuleJPA.from(module));
         Assertions.assertEquals(1, moduleRepository.count());
         moduleMySQLGateway.deleteById(ModuleID.from(createdModuleEntity.getId()));
         Assertions.assertEquals(0, moduleRepository.count());
@@ -152,7 +152,7 @@ class ModuleMySQLGatewayTest {
 
         //When/then
         Assertions.assertEquals(0, moduleRepository.count());
-        moduleRepository.save(ModuleJpaEntity.from(module));
+        moduleRepository.save(ModuleJPA.from(module));
         Assertions.assertEquals(1, moduleRepository.count());
         moduleMySQLGateway.deleteById(ModuleID.from("123"));
         Assertions.assertEquals(1, moduleRepository.count());
@@ -166,7 +166,7 @@ class ModuleMySQLGatewayTest {
 
         //When
         Assertions.assertEquals(0, moduleRepository.count());
-        var createdModuleEntity = moduleRepository.save(ModuleJpaEntity.from(module));
+        var createdModuleEntity = moduleRepository.save(ModuleJPA.from(module));
         Assertions.assertEquals(1, moduleRepository.count());
         var moduleFound = moduleMySQLGateway.findById(ModuleID.from(createdModuleEntity.getId())).orElseThrow();
         Assertions.assertEquals(1, moduleRepository.count());
@@ -189,7 +189,7 @@ class ModuleMySQLGatewayTest {
 
         //When/then
         Assertions.assertEquals(0, moduleRepository.count());
-        moduleRepository.save(ModuleJpaEntity.from(module));
+        moduleRepository.save(ModuleJPA.from(module));
         Assertions.assertEquals(1, moduleRepository.count());
         var moduleFound = moduleMySQLGateway.findById(ModuleID.from("123"));
         Assertions.assertEquals(1, moduleRepository.count());
@@ -210,12 +210,12 @@ class ModuleMySQLGatewayTest {
 
         //When
         Assertions.assertEquals(0, moduleRepository.count());
-        var createdModuleEntity1 = moduleRepository.save(ModuleJpaEntity.from(module1));
-        moduleRepository.save(ModuleJpaEntity.from(module2));
-        moduleRepository.save(ModuleJpaEntity.from(module3));
+        var createdModuleEntity1 = moduleRepository.save(ModuleJPA.from(module1));
+        moduleRepository.save(ModuleJPA.from(module2));
+        moduleRepository.save(ModuleJPA.from(module3));
         Assertions.assertEquals(3, moduleRepository.count());
 
-        var query = ModuleSearchQuery.with(0, 1, "name", ASC);
+        var query = SearchQuery.with(0, 1, "name", ASC);
         var modulesFound = moduleMySQLGateway.findAll(query);
 
         assertEquals(expectedPage, modulesFound.currentPage());
@@ -236,7 +236,7 @@ class ModuleMySQLGatewayTest {
 
         assertEquals(0, moduleRepository.count());
 
-        var query = ModuleSearchQuery.with(0, 1, "name", ASC);
+        var query = SearchQuery.with(0, 1, "name", ASC);
         var modulesFound = moduleMySQLGateway.findAll(query);
 
         assertEquals(expectedPage, modulesFound.currentPage());
@@ -257,11 +257,11 @@ class ModuleMySQLGatewayTest {
 
         //When Page 1
         Assertions.assertEquals(0, moduleRepository.count());
-        moduleRepository.save(ModuleJpaEntity.from(module1));
-        var createdModuleEntity2 = moduleRepository.save(ModuleJpaEntity.from(module2));
-        var createdModuleEntity3 = moduleRepository.save(ModuleJpaEntity.from(module3));
+        moduleRepository.save(ModuleJPA.from(module1));
+        var createdModuleEntity2 = moduleRepository.save(ModuleJPA.from(module2));
+        var createdModuleEntity3 = moduleRepository.save(ModuleJPA.from(module3));
         Assertions.assertEquals(3, moduleRepository.count());
-        var query = ModuleSearchQuery.with(1, 1,"name", ASC);
+        var query = SearchQuery.with(1, 1,"name", ASC);
         var modulesFound = moduleMySQLGateway.findAll(query);
 
         //Then
@@ -272,7 +272,7 @@ class ModuleMySQLGatewayTest {
         assertEquals(createdModuleEntity2.getId(), modulesFound.items().get(0).getId().getValue());
 
         //When Page 2
-        query = ModuleSearchQuery.with(2, 1, "name", ASC);
+        query = SearchQuery.with(2, 1, "name", ASC);
         modulesFound = moduleMySQLGateway.findAll(query);
 
         //Then
@@ -298,12 +298,12 @@ class ModuleMySQLGatewayTest {
 
         //When
         Assertions.assertEquals(0, moduleRepository.count());
-        var createdModuleEntity1 = moduleRepository.save(ModuleJpaEntity.from(module1));
-        moduleRepository.save(ModuleJpaEntity.from(module2));
-        moduleRepository.save(ModuleJpaEntity.from(module3));
+        var createdModuleEntity1 = moduleRepository.save(ModuleJPA.from(module1));
+        moduleRepository.save(ModuleJPA.from(module2));
+        moduleRepository.save(ModuleJPA.from(module3));
         Assertions.assertEquals(3, moduleRepository.count());
 
-        var query = ModuleSearchQuery.with(0, 1, "name", ASC, "name", LIKE, "Name 1");
+        var query = SearchQuery.with(0, 1, "name", ASC, "name", LIKE, "Name 1");
         var modulesFound = moduleMySQLGateway.findAll(query);
 
         //Then
@@ -329,12 +329,12 @@ class ModuleMySQLGatewayTest {
 
         //When
         Assertions.assertEquals(0, moduleRepository.count());
-        var createdModuleEntity1 = moduleRepository.save(ModuleJpaEntity.from(module1));
-        var createdModuleEntity2 = moduleRepository.save(ModuleJpaEntity.from(module2));
-        var createdModuleEntity3 = moduleRepository.save(ModuleJpaEntity.from(module3));
+        var createdModuleEntity1 = moduleRepository.save(ModuleJPA.from(module1));
+        var createdModuleEntity2 = moduleRepository.save(ModuleJPA.from(module2));
+        var createdModuleEntity3 = moduleRepository.save(ModuleJPA.from(module3));
         Assertions.assertEquals(3, moduleRepository.count());
 
-        var query = ModuleSearchQuery.with(0, 1, "name" , ASC,"displayName" ,LIKE, "DISPLAY NAME 2");
+        var query = SearchQuery.with(0, 1, "name" , ASC,"displayName" ,LIKE, "DISPLAY NAME 2");
         var modulesFound = moduleMySQLGateway.findAll(query);
 
         //Then
@@ -359,15 +359,15 @@ class ModuleMySQLGatewayTest {
 
         //When
         Assertions.assertEquals(0, moduleRepository.count());
-        var createdModuleEntity1 = moduleRepository.save(ModuleJpaEntity.from(module1));
-        var createdModuleEntity2 = moduleRepository.save(ModuleJpaEntity.from(module2));
-        var createdModuleEntity3 = moduleRepository.save(ModuleJpaEntity.from(module3));
+        var createdModuleEntity1 = moduleRepository.save(ModuleJPA.from(module1));
+        var createdModuleEntity2 = moduleRepository.save(ModuleJPA.from(module2));
+        var createdModuleEntity3 = moduleRepository.save(ModuleJPA.from(module3));
         Assertions.assertEquals(3, moduleRepository.count());
 
         String[] fields = {"displayName", "name"};
         Operator[] operators = {Operator.LIKE, Operator.LIKE};
         String[] terms = {"DISPLAY NAME 1", "Name 1"};
-        var query = ModuleSearchQuery.with(0, 1, "name", ASC, fields, operators, terms);
+        var query = SearchQuery.with(0, 1, "name", ASC, fields, operators, terms);
         var modulesFound = moduleMySQLGateway.findAll(query);
 
         //Then
@@ -393,16 +393,16 @@ class ModuleMySQLGatewayTest {
 
         //When
         Assertions.assertEquals(0, moduleRepository.count());
-        var createdModuleEntity1 = moduleRepository.save(ModuleJpaEntity.from(module1));
-        var createdModuleEntity2 = moduleRepository.save(ModuleJpaEntity.from(module2));
-        var createdModuleEntity3 = moduleRepository.save(ModuleJpaEntity.from(module3));
-        var createdModuleEntity4 = moduleRepository.save(ModuleJpaEntity.from(module4));
+        var createdModuleEntity1 = moduleRepository.save(ModuleJPA.from(module1));
+        var createdModuleEntity2 = moduleRepository.save(ModuleJPA.from(module2));
+        var createdModuleEntity3 = moduleRepository.save(ModuleJPA.from(module3));
+        var createdModuleEntity4 = moduleRepository.save(ModuleJPA.from(module4));
         Assertions.assertEquals(4, moduleRepository.count());
 
         String[] fields = {"name"};
         Operator[] operators = {Operator.IN};
         Object[] terms = {List.of("Name 1", "Name 2")};
-        var query = ModuleSearchQuery.with(0, 2, "name", ASC, fields, operators, terms);
+        var query = SearchQuery.with(0, 2, "name", ASC, fields, operators, terms);
         var modulesFound = moduleMySQLGateway.findAll(query);
 
         //Then
@@ -427,15 +427,15 @@ class ModuleMySQLGatewayTest {
 
         //When
         Assertions.assertEquals(0, moduleRepository.count());
-        var createdModuleEntity1 = moduleRepository.save(ModuleJpaEntity.from(module1));
-        var createdModuleEntity2 = moduleRepository.save(ModuleJpaEntity.from(module2));
-        var createdModuleEntity3 = moduleRepository.save(ModuleJpaEntity.from(module3));
+        var createdModuleEntity1 = moduleRepository.save(ModuleJPA.from(module1));
+        var createdModuleEntity2 = moduleRepository.save(ModuleJPA.from(module2));
+        var createdModuleEntity3 = moduleRepository.save(ModuleJPA.from(module3));
         Assertions.assertEquals(3, moduleRepository.count());
 
         String[] fields = {"createdAt"};
         Operator[] operators = {Operator.GREATER_THAN};
         Object[] terms = {LocalDateTime.now().plusMinutes(-1)};
-        var query = ModuleSearchQuery.with(0, 3, "name", ASC, fields, operators, terms);
+        var query = SearchQuery.with(0, 3, "name", ASC, fields, operators, terms);
         var modulesFound = moduleMySQLGateway.findAll(query);
 
         //Then
@@ -460,15 +460,15 @@ class ModuleMySQLGatewayTest {
 
         //When
         Assertions.assertEquals(0, moduleRepository.count());
-        var createdModuleEntity1 = moduleRepository.save(ModuleJpaEntity.from(module1));
-        var createdModuleEntity2 = moduleRepository.save(ModuleJpaEntity.from(module2));
-        var createdModuleEntity3 = moduleRepository.save(ModuleJpaEntity.from(module3));
+        var createdModuleEntity1 = moduleRepository.save(ModuleJPA.from(module1));
+        var createdModuleEntity2 = moduleRepository.save(ModuleJPA.from(module2));
+        var createdModuleEntity3 = moduleRepository.save(ModuleJPA.from(module3));
         Assertions.assertEquals(3, moduleRepository.count());
 
         String[] fields = {"createdAt"};
         Operator[] operators = {Operator.LESS_THAN};
         Object[] terms = {LocalDateTime.now().plusMinutes(-1)};
-        var query = ModuleSearchQuery.with(0, 3, "name", ASC, fields, operators, terms);
+        var query = SearchQuery.with(0, 3, "name", ASC, fields, operators, terms);
         var modulesFound = moduleMySQLGateway.findAll(query);
 
         //Then

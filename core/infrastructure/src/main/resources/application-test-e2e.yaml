@@ -5,5 +5,5 @@ logging:
 mysql:
   username: root
   password: 123456
-  schema: adm_videos
+  schema: sysw_core
   url: localhost:${mysql.port}
